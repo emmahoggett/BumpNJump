@@ -6,13 +6,22 @@
 #include <nds.h>
 #include <stdio.h>
 
-#include "P_Graphics.h"
+#include "P_Initializer.h"
+#include "P_Controls.h"
+
+int image = 0;
 
 int main(void) {
-	
-	 P_Graphics_Main();
-	 P_Graphics_Main_config_BG0();
 
-    while(1)
-        swiWaitForVBlank();	
+	P_InitNDS();
+
+	while(1){
+		for (image = 0; image <=512-192; image++){
+			REG_BG0VOFS = image;
+			REG_BG0VOFS_SUB = image;
+			handleInput();
+			swiWaitForVBlank();
+		}
+
+	}
 }
