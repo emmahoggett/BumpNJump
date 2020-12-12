@@ -1,28 +1,21 @@
-
 #include "P_Controls.h"
 
 //Position
-int x = 127, y = 175, keys;
+int x_car = 127, speed = 0, keys;
 int  image;
 
 
-void handleInput(){
-	for (image = 512-192; image >=0; image-=1){
-		swiWaitForVBlank();
-		REG_BG0VOFS = (image+192)%(513-192);
-		REG_BG0VOFS_SUB = (image+72)%(513-192);
+void handleKeys(){
 		scanKeys();
 		keys = keysHeld();
-
     	//Modify position of the sprite accordingly
-    	if((keys & KEY_RIGHT) && (x < (SCREEN_WIDTH - SPRITE_WIDTH))) x+=2;
-    	if((keys & KEY_DOWN) && (y < (SCREEN_HEIGHT - SPRITE_HEIGHT)))
-    		y+=2;
-    	if((keys & KEY_LEFT) && (x  > 66)) x-=2;
-    	if((keys & KEY_UP) && (y  > 0))
-    		y-=2;
-    	spritePosition(oamSub, 1, x, y);
-	}
+    	if((keys & KEY_RIGHT) && (x_car < (SCREEN_WIDTH - SPRITE_WIDTH))) x_car+=2;
+    	if((keys & KEY_DOWN) && (speed < 3)) speed+=1;
+    	if((keys & KEY_LEFT) && (x_car  > 66)) x_car-=2;
+    	if((keys & KEY_UP) && (speed  > 0)) speed-=1;
+    	P_Graphics_Main_scrolling_BG0(speed);
+    	P_Graphics_Sub_scrolling_BG0(speed);
+    	spritePosition(oamSub, 1, x_car, 100);
 }
 
 void spritePosition(OamState oam, int sprite, int sprite_x, int sprite_y){
@@ -45,4 +38,13 @@ void spritePosition(OamState oam, int sprite, int sprite_x, int sprite_y){
 	oamUpdate(&oam);
 }
 
+
+int carTouched(int x_enemy, int y_enemy){
+	int touch = 0;
+	if (y_enemy+2*SPRITE_HEIGHT == 95 || y_enemy-2*SPRITE_HEIGHT == 95 ){
+		if (x_car+2*SPRITE_WIDTH == x_enemy || x_car == x_enemy +2*SPRITE_WIDTH)
+			touch = 1;
+	}
+	return touch;
+}
 

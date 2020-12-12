@@ -1,8 +1,9 @@
-#include <nds.h>
-#include "P_Audio.h"
-#include "P_Graphics_Main.h"
 #include "P_Graphics_Sub.h"
+#include "P_Graphics_Main.h"
+#include <nds.h>
 
 void P_InitNDS();
 
-void Timer0ISR();
+
+
+void P_Init_startScreen();

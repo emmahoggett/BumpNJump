@@ -15,6 +15,6 @@ int main(void) {
 	P_InitNDS();
 
 	while(1){
-		handleInput();
+		handleKeys();
 	}
 }

@@ -1,32 +1,12 @@
 #include "P_Graphics_Sub.h"
 
 
-int i,j;
-u8 grassTileSub[64] = {
-		8,8,8,8,8,8,8,8,
-		8,7,7,8,8,8,8,8,
-		8,7,7,8,8,8,8,8,
-		8,7,7,8,8,8,8,8,
-		8,8,8,8,8,8,8,8,
-		8,8,8,8,7,7,8,8,
-		8,8,8,8,7,7,8,8,
-		8,8,8,8,8,8,8,8
-};
+int i, bg0_sub = 344;
 
-u8 waterTileSub[64] = {
-		9,9,9,9,9,9,9,9,
-		10,10,9,9,10,10,9,9,
-		9,10,10,9,9,10,10,9,
-		10,10,9,9,10,10,9,9,
-		9,10,10,9,9,10,10,9,
-		10,10,9,9,10,10,9,9,
-		9,10,10,9,9,10,10,9,
-		9,9,9,9,9,9,9,9
-};
 
 void P_Graphics_Sub(){
 	VRAM_C_CR = VRAM_ENABLE|VRAM_C_SUB_BG;
-	REG_DISPCNT_SUB = MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE;
+	REG_DISPCNT_SUB = MODE_0_2D | DISPLAY_BG0_ACTIVE;
 }
 
 void P_Graphics_Sub_config_BG0(){
@@ -43,30 +23,17 @@ void P_Graphics_Sub_config_BG0(){
 	for (i = 0; i <32; i++){
 		dmaCopy(&roadMap[(i+32)*32], &BG_MAP_RAM_SUB(1)[i*32],64);
 	}
-
-
 }
 
-void P_Graphics_Sub_config_BG1(){
-	BGCTRL_SUB[1] =  BG_32x64 | BG_COLOR_256 | BG_MAP_BASE(29) | BG_TILE_BASE(5);
+void P_Graphics_Sub_scrolling_BG0(int speed){
 
-	swiCopy(grassTileSub,&BG_TILE_RAM_SUB(5)[0], 64);
-	swiCopy(waterTileSub,&BG_TILE_RAM_SUB(5)[32], 64);
+	if (speed < 0) speed = 0;
+	else if(speed > 8) speed = 8;
 
-	BG_PALETTE_SUB [8] = ARGB16(1, 0, 20, 15);
-	BG_PALETTE_SUB [7] = ARGB16(1,10, 25, 10);
-
-	BG_PALETTE_SUB [9] = ARGB16(1, 0, 15, 31);
-	BG_PALETTE_SUB [10] = ARGB16(1, 0, 25, 25);
-
-	for (i = 0; i < 32; i++){
-		for (j = 0; j < 32; j++){
-			if (j < 16) BG_MAP_RAM_SUB(29)[i*32 +j] = 0;
-			else BG_MAP_RAM_SUB(29)[i*32 +j] = 1;
-		}
-	}
-
+	REG_BG0VOFS_SUB = bg0_sub;
+	bg0_sub-=speed;
 }
+
 
 void P_Graphics_configureSprites(){
 //Set up memory bank to work in sprite mode (offset since we are using VRAM A for backgrounds)
@@ -103,3 +70,5 @@ void P_Graphics_setSprites(OamState oam, int sprite, int sprite_x, int sprite_y,
 	//Update the sprites
 	oamUpdate(&oam);
 }
+
+
