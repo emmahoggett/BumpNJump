@@ -4,12 +4,13 @@
 int i, bg0_sub = 344;
 
 
+
 void P_Graphics_Sub(){
 	VRAM_C_CR = VRAM_ENABLE|VRAM_C_SUB_BG;
-	REG_DISPCNT_SUB = MODE_0_2D | DISPLAY_BG0_ACTIVE;
 }
 
 void P_Graphics_Sub_config_BG0(){
+	REG_DISPCNT_SUB = MODE_0_2D | DISPLAY_BG0_ACTIVE;
 	BGCTRL_SUB[0] =  BG_32x64 | BG_COLOR_256 | BG_MAP_BASE(0) | BG_TILE_BASE(1);
 
 	// Transfer of the image and the palette to the engine
@@ -25,7 +26,19 @@ void P_Graphics_Sub_config_BG0(){
 	}
 }
 
+
+void P_Graphics_Sub_config_Start(){
+	REG_DISPCNT_SUB = MODE_0_2D | DISPLAY_BG1_ACTIVE;
+	BGCTRL_SUB[1] =BG_32x32 | BG_COLOR_256 | BG_MAP_BASE(0) | BG_TILE_BASE(1);
+
+	// Transfer of the image and the palette to the engine
+	swiCopy(startscreensubMap,BG_MAP_RAM_SUB(0), startscreensubMapLen/2);
+	swiCopy(startscreensubPal,BG_PALETTE_SUB, startscreensubPalLen/2);
+	swiCopy(startscreensubTiles, BG_TILE_RAM_SUB(1), startscreensubTilesLen/2);
+}
+
 void P_Graphics_Sub_scrolling_BG0(int speed){
+
 
 	if (speed < 0) speed = 0;
 	else if(speed > 8) speed = 8;
@@ -71,4 +84,24 @@ void P_Graphics_setSprites(OamState oam, int sprite, int sprite_x, int sprite_y,
 	oamUpdate(&oam);
 }
 
+void spritePosition(OamState oam, int sprite, int sprite_x, int sprite_y){
+	oamSet(&oam, 	// oam handler
+		sprite,				// Number of sprite
+		sprite_x, sprite_y,			// Coordinates
+		0,				// Priority
+		1,				// Palette to use
+		SpriteSize_16x16,			// Sprite size
+		SpriteColorFormat_256Color,	// Color format
+		gfx,			// Loaded graphic to display
+		-1,				// Affine rotation to use (-1 none)
+		false,			// Double size if rotating
+		false,			// Hide this sprite
+		false, false,	// Horizontal or vertical flip
+		false			// Mosaic
+		);
+	swiWaitForVBlank();
+	//Update the sprites
+	oamUpdate(&oam);
+}
 
+int scrollPos(){ return bg0_sub;}

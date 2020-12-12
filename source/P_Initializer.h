@@ -3,7 +3,5 @@
 #include <nds.h>
 
 void P_InitNDS();
+void InitTimer();
 
-
-
-void P_Init_startScreen();

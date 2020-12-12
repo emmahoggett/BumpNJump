@@ -2,6 +2,7 @@
 
 #include "P_Graphics_Sub.h"
 #include "P_Graphics_Main.h"
+#include "P_Initializer.h"
 
 #define SCREEN_WIDTH	256
 #define	SCREEN_HEIGHT	192
@@ -11,6 +12,8 @@
 
 
 void handleKeys();
-void spritePosition(OamState oam, int sprite, int sprite_x, int sprite_y);
+
+void P_Game();
+void P_Lose();
 
 
