@@ -5,8 +5,8 @@
 
 u16* mapMemory;
 
-void P_Graphics_Main_config_Start();
-void P_Graphics_Main_config_GameOver();
+void P_Map16x16_configureStart();
+void P_Map16x16_configureGameOver();
 
 void P_Map16x16_configureBG3();
 void P_Map16x16_configureBG0();
@@ -16,6 +16,10 @@ void P_Map16x16_configureBG2_Sub();
 
 void P_Map16x16_scrolling_BG3(int _speed);
 void P_Map16x16_scrolling_BG2_Sub(int _speed);
+
+void P_Map16x16_TimerInit();
+
+void P_Map16x16_warning();
 
 void P_Map16x16_Init();
 

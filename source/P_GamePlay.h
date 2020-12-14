@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <nds.h>
@@ -8,5 +7,6 @@
 void Gameplay_Init();
 void Gameplay_handleInput(enum ACTION a);
 void Gameplay_Update();
+
 
 int carTouched(int x_enemy, int y_enemy);

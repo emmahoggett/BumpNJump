@@ -1,8 +1,7 @@
-
 #include "P_GamePlay.h"
 #include "P_Score.h"
 
-int speed = 0, x_car = 128;
+int speed = 2, x_car = 128;
 
 void Gameplay_handleInput(enum ACTION a){
 	switch(a){
@@ -22,6 +21,7 @@ void Gameplay_handleInput(enum ACTION a){
 void Gameplay_Update(){
 	P_Map16x16_scrolling_BG3(speed);
 	P_Map16x16_scrolling_BG2_Sub(speed);
+
 	P_Graphics_setSprites(oamSub, 1, x_car, 100, 0);
 	updateScore(speed);
 }

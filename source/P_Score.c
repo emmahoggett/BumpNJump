@@ -1,3 +1,4 @@
+
 #include "P_Score.h"
 #include "numbers.h"
 #include <stdio.h>
@@ -5,17 +6,21 @@
 
 int score = 0, max_score = 0;
 
-
-void updateScore(int carspeed){
+void updateScore(int rows)
+{
 	/*
-	 * Speed & enemies increase the score
-	 *
+	 * Depending on the lines increase the score
+	 *  1 point - one single line
+	 *  4 points - 2 lines
+	 *  8 points - 3 lines
+	 *  10 points - 4 lines
 	 */
-	switch(carspeed)
+	switch(rows)
 	{
 	case 1: score+=1; break;
 	case 2: score+=4; break;
 	case 3: score+=8; break;
+	case 4: score+=15; break;
 	}
 
 	//Display the score
@@ -52,8 +57,7 @@ void displayScore()
 		number = score / number;
 		number = number % 10;
 		//Render the number
-		BG_MAP_RAM(24)[1+(23-i)*32] = numbersMap[(10 - number)*2] | TILE_PALETTE(9);
-		BG_MAP_RAM(24)[1+(23-i)*32+1] = numbersMap[(10 - number)*2+1] | TILE_PALETTE(9);
+		BG_MAP_RAM(25)[32 +6-i] = numbersMap[(number)] | TILE_PALETTE(9);
 	}
 }
 
@@ -83,7 +87,7 @@ void readMaxScore()
 void writeMaxScore()
 {
 	//Open the file in write mode to overwrite
-	FILE* file = fopen("/BumpNJumprecord.txt","w+");
+	FILE* file = fopen("/Tetrisrecord.txt","w+");
 	if(file != NULL)
 	{
 		//Print the value in the file
@@ -107,7 +111,6 @@ void displayMaxScore()
 		while(j--)number = number*10;
 		number = max_score / number;
 		number = number % 10;
-		BG_MAP_RAM(24)[1+(6-i)*32] = numbersMap[(10 - number)*2] | TILE_PALETTE(8);
-		BG_MAP_RAM(24)[1+(6-i)*32+1] = numbersMap[(10 - number)*2+1] | TILE_PALETTE(8);
+		BG_MAP_RAM(25)[3*32 +6-i] = numbersMap[(number)] | TILE_PALETTE(8);
 	}
 }
