@@ -2,6 +2,7 @@
 #include "P_Graphics.h"
 #include "road.h"
 #include "numbers.h"
+#include "warning.h"
 
 u16* mapMemory;
 

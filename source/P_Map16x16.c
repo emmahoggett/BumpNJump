@@ -1,59 +1,7 @@
 #include "P_Map16x16.h"
 
-int i, j, bg3_main = 0,bg2_sub = 192, timer_ticks0;
+int i, bg3_main = 0,bg2_sub = 192;
 
-u8 emptyTile[64] = {
-		0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0
-};
-
-u8 warningTile[64] = {
-		254,254,254,255,255,254,254,254,
-		254,254,254,255,255,254,254,254,
-		254,254,254,255,255,254,254,254,
-		254,254,254,255,255,254,254,254,
-		254,254,254,255,255,254,254,254,
-		254,254,254,254,254,254,254,254,
-		254,254,254,255,255,254,254,254,
-		254,254,254,255,255,254,254,254,
-};
-
-u8 redTile[64] = {
-		254,254,254,254,254,254,254,254,
-		254,254,254,254,254,254,254,254,
-		254,254,254,254,254,254,254,254,
-		254,254,254,254,254,254,254,254,
-		254,254,254,254,254,254,254,254,
-		254,254,254,254,254,254,254,254,
-		254,254,254,254,254,254,254,254,
-		254,254,254,254,254,254,254,254,
-};
-
-void timer0_IRQ(){
-	i = 32*32;
-	while(i--)
-		BG_MAP_RAM(25)[i] = 10;
-	for (i = 14; i<17;i+=2){
-		for (j = 1; j<6; j++){
-			if (j%2){
-				BG_MAP_RAM(20)[i + j*32] = 2; BG_MAP_RAM(20)[i + 1 + j*32] = 2;
-			}
-			else
-				BG_MAP_RAM(20)[i + j*32] = 2; BG_MAP_RAM(20)[i + 1 + j*32] = 1;
-		}
-	}
-	timer_ticks0++;
-	if (timer_ticks0>=20){
-		irqDisable(IRQ_TIMER0);
-	}
-
-}
 
 
 void P_Map16x16_configureBG3(){
@@ -88,13 +36,11 @@ void P_Map16x16_configureBG2(){
 }
 
 void P_Map16x16_configureBG0(){
-	BGCTRL[0] =  BG_32x32 | BG_COLOR_256 | BG_MAP_BASE(20) | BG_TILE_BASE(2);
+	BGCTRL[0] =  BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(20) | BG_TILE_BASE(2);
 	// Transfer of the image and the palette to the engine
-	dmaCopy(emptyTile,(u8*)BG_TILE_RAM(2), 64);
-	dmaCopy(warningTile,(u8*)BG_TILE_RAM(2) + 64, 64);
-	dmaCopy(redTile,(u8*)BG_TILE_RAM(2) + 128 , 64);
-	BG_PALETTE[255] = ARGB16(1,25,25,25);
-	BG_PALETTE[254] = ARGB16(1,31,0,0);
+	dmaCopy(warningTiles,(u8*)BG_TILE_RAM(2),warningTilesLen);
+	dmaCopy(warningPal,&BG_PALETTE[160],warningPalLen);
+	BG_PALETTE[161] = ARGB16(1,20,0,0);
 
 	int i = 32*32;
 	while(i--)
@@ -105,8 +51,7 @@ void P_Map16x16_configureBG0(){
 void P_Map16x16_scrolling_BG3(int _speed){
 	REG_BG3VOFS = bg3_main;
 	bg3_main =( bg3_main- _speed)%512;
-	if (bg3_main >= 417 && bg3_main <= 417+_speed)
-		irqEnable(IRQ_TIMER0);
+	if (bg3_main>=0 && bg3_main<=_speed )irqEnable(IRQ_TIMER0);
 }
 
 void P_Map16x16_configureBG2_Sub(){
@@ -139,7 +84,6 @@ void P_Map16x16_Init(){
 	P_Map16x16_configureBG0();
 
 	P_Map16x16_configureBG2_Sub();
-	P_Map16x16_TimerInit();
 	P_Graphics_configureSprites();
 }
 
@@ -177,9 +121,3 @@ void P_Graphics_setSprites(OamState oam, int sprite, int sprite_x, int sprite_y,
 	oamUpdate(&oam);
 }
 
-void P_Map16x16_TimerInit(){
-	timer_ticks0 = 0;
-	TIMER_CR(0) = TIMER_ENABLE | TIMER_DIV_1024 | TIMER_IRQ_REQ;
-	TIMER_DATA(0) = TIMER_FREQ_1024(10);
-	irqSet(IRQ_TIMER0, &timer0_IRQ);
-}
