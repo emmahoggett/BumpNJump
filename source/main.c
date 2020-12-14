@@ -8,13 +8,15 @@
 
 #include "P_Initializer.h"
 #include "P_Controls.h"
+#include "P_GamePlay.h"
 
-int image = 0;
 
 int main(void) {
 	P_InitNDS();
 
 	while(1){
-		P_Game();
+		handleKeys();
+		handleTouch();
+		Gameplay_Update();
 	}
 }

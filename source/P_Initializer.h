@@ -1,7 +1,6 @@
-#include "P_Graphics_Sub.h"
-#include "P_Graphics_Main.h"
 #include <nds.h>
+#include "P_Map16x16.h"
+#include "P_Audio.h"
 
 void P_InitNDS();
-void InitTimer();
 
