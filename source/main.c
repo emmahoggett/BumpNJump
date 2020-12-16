@@ -18,5 +18,6 @@ int main(void) {
 		handleKeys();
 		handleTouch();
 		Gameplay_Update();
+		swiWaitForVBlank();
 	}
 }

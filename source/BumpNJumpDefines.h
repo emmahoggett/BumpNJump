@@ -7,6 +7,8 @@
 #define	SPRITE_WIDTH	16
 #define	SPRITE_HEIGHT	16
 
+#define POS_REDCAR 95
+
 enum ACTION{
 	NONE,
 	EXIT,
@@ -14,5 +16,6 @@ enum ACTION{
 	LEFT,
 	RIGHT,
 	SPEED,
+	START,
 };
 

@@ -13,6 +13,7 @@ void handleKeys(){
     	if((keys & KEY_DOWN)) Gameplay_handleInput(SPEED);
     	if((keys & KEY_LEFT)) Gameplay_handleInput(LEFT);
     	if ((keys & KEY_UP)) Gameplay_handleInput(JUMP);
+    	if ((keys & KEY_START))Gameplay_handleInput(START);
 }
 
 void handleTouch(){

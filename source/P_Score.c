@@ -6,7 +6,7 @@
 
 int score = 0, max_score = 0;
 
-void updateScore(int rows)
+void updateScore(int speed, int touch, int enemy)
 {
 	/*
 	 * Depending on the lines increase the score
@@ -15,14 +15,17 @@ void updateScore(int rows)
 	 *  8 points - 3 lines
 	 *  10 points - 4 lines
 	 */
-	switch(rows)
+	switch(speed)
 	{
 	case 1: score+=1; break;
-	case 2: score+=4; break;
-	case 3: score+=8; break;
-	case 4: score+=15; break;
+	case 2: score+=2; break;
+	case 3: score+=3; break;
+	case 4: score+=4; break;
+	case 5: score+=5; break;
 	}
-
+	if (touch > 0) score = score+touch;
+	if (enemy > 0) score = score -enemy;
+	if (score < 0) score = 0;
 	//Display the score
 	displayScore();
 
@@ -57,7 +60,7 @@ void displayScore()
 		number = score / number;
 		number = number % 10;
 		//Render the number
-		BG_MAP_RAM(25)[32 +6-i] = numbersMap[(number)] | TILE_PALETTE(9);
+		BG_MAP_RAM(10)[32 +6-i] = numbersMap[(number)] | TILE_PALETTE(9);
 	}
 }
 
@@ -70,7 +73,7 @@ void displayScore()
 void readMaxScore()
 {
 	//Open the file in read mode
-	FILE* file = fopen("/Tetrisrecord.txt","r");
+	FILE* file = fopen("/BumpNJumprecord.txt","r");
 	if(file != NULL)
 	{
 		//Read the value and put it into the variable max_score
@@ -87,7 +90,7 @@ void readMaxScore()
 void writeMaxScore()
 {
 	//Open the file in write mode to overwrite
-	FILE* file = fopen("/Tetrisrecord.txt","w+");
+	FILE* file = fopen("/BumpNJumprecord.txt","w+");
 	if(file != NULL)
 	{
 		//Print the value in the file
@@ -111,6 +114,6 @@ void displayMaxScore()
 		while(j--)number = number*10;
 		number = max_score / number;
 		number = number % 10;
-		BG_MAP_RAM(25)[3*32 +6-i] = numbersMap[(number)] | TILE_PALETTE(8);
+		BG_MAP_RAM(10)[3*32 +6-i] = numbersMap[(number)] | TILE_PALETTE(8);
 	}
 }
