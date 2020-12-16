@@ -5,11 +5,11 @@ int i, bg3_main = 1,bg2_sub = 193;
 
 
 void P_Map16x16_configureBG3(){
-	BGCTRL[3] =  BG_32x64 | BG_COLOR_256 | BG_MAP_BASE(7) | BG_TILE_BASE(0);
+	BGCTRL[3] =  BG_32x64 | BG_COLOR_16 | BG_MAP_BASE(7) | BG_TILE_BASE(0);
 
 	// Transfer of the image and the palette to the engine
 	dmaCopy(roadTiles,BG_TILE_RAM(0), roadTilesLen);
-	dmaCopy(roadPal,BG_PALETTE, roadPalLen);
+	dmaCopy(roadPal,&BG_PALETTE[0], roadPalLen);
 
 	for (i = 0; i <32; i++){
 		dmaCopy(&roadMap[i*32], &BG_MAP_RAM(7)[i*32],64);
@@ -53,15 +53,15 @@ void P_Map16x16_scrolling_BG3(int _speed){
 }
 
 void P_Map16x16_configureStart(){
-	BGCTRL[1] =  BG_32x32 | BG_COLOR_256 | BG_MAP_BASE(12) | BG_TILE_BASE(4);
-	dmaCopy(startscreenmainTiles,(u8*)BG_TILE_RAM(4),startscreenmainTilesLen);
-	dmaCopy(startscreenmainPal,VRAM_E,startscreenmainPalLen);
-	dmaCopy(startscreenmainMap,(u8*)BG_MAP_RAM(12),startscreenmainMapLen);
+	BGCTRL[1] =  BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(12) | BG_TILE_BASE(4);
+	dmaCopy(startscreenmainTiles,BG_TILE_RAM(4),startscreenmainTilesLen);
+	dmaCopy(startscreenmainPal,&BG_PALETTE[208],startscreenmainPalLen);
+	dmaCopy(startscreenmainMap,BG_MAP_RAM(12),startscreenmainMapLen);
 
 }
 
 void P_Map16x16_configureBG2_Sub(){
-	BGCTRL_SUB[2] =  BG_32x64 | BG_COLOR_256 | BG_MAP_BASE(0) | BG_TILE_BASE(1);
+	BGCTRL_SUB[2] =  BG_32x64 | BG_COLOR_16 | BG_MAP_BASE(0) | BG_TILE_BASE(1);
 
 	// Transfer of the image and the palette to the engine
 	dmaCopy(roadTiles,BG_TILE_RAM_SUB(1), roadTilesLen);

@@ -4,7 +4,7 @@ void Audio_Init(){
 	//Init the sound library
 	mmInitDefaultMem((mm_addr)soundbank_bin);
 	//Load module
-	mmLoad(MOD_SEASIDE); /// Partie qui ne marche pas
+	mmLoad(MOD_RETROGAMES_INGAME3); /// Partie qui ne marche pas
 	//Load effects
 	mmLoadEffect(SFX_JUMP);
 	mmLoadEffect(SFX_ENEMY);
@@ -34,7 +34,7 @@ void Audio_PlaySoundEX( int i )
 void Audio_PlayMusic()
 {
 	//Start playing music in a loop
-	mmStart(MOD_SEASIDE, MM_PLAY_LOOP);
+	mmStart(MOD_RETROGAMES_INGAME3, MM_PLAY_LOOP);
 	//Set module volume to 512 (range 0...1024) using the function mmSetModuleVolume(...)
-	mmSetModuleVolume(512);
+	mmSetModuleVolume(1024);
 }

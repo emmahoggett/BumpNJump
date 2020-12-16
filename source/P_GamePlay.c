@@ -1,7 +1,7 @@
 #include "P_GamePlay.h"
 
 
-int speed = 0, x_car = 128, game_state = 0;
+int speed = 0, x_car = 128, game_state = 1;
 int x_pink = 128, y_pink = SCREEN_HEIGHT-SPRITE_HEIGHT;
 int touch = 0, enemy = 0;
 
@@ -11,8 +11,11 @@ void Gameplay_handleInput(enum ACTION a){
 	switch(a){
 	case JUMP :
 		irqEnable(IRQ_TIMER1);
-		Audio_PlaySoundEX(SFX_JUMP);break;
-	case SPEED:
+		Audio_PlaySoundEX(SFX_JUMP);
+		break;
+	case DOWN:
+		if (speed > 0)speed--; break;
+	case UP:
 		if (speed < 5)speed++; break;
 	case LEFT:
 		if (x_car >= 70) x_car-=1; break;
@@ -41,12 +44,25 @@ void Gameplay_Update(){
 	enemy = 0; touch = 0;
 }
 
+void P_Game(){
+	if (game_state){
+		Gameplay_Update();
+	}else{
+		Gameplay_Init();
+	}
+	handleKeys();
+	handleTouch();
+}
+
+void Gameplay_Init(){
+
+}
 
 void carTouched(int x_enemy, int y_enemy){
 	if (abs(y_pink-POS_REDCAR) < SPRITE_HEIGHT/2){
 		if (abs (x_car- x_enemy)< SPRITE_WIDTH/2){
-			Audio_PlaySoundEX(SFX_ENEMY);
 			enemy = 50;
+			Audio_PlaySoundEX(SFX_ENEMY);
 		}
 	}
 }
@@ -54,7 +70,6 @@ void carTouched(int x_enemy, int y_enemy){
 void carJump(int x_enemy, int y_enemy){
 	if (abs(y_pink-POS_REDCAR) < SPRITE_HEIGHT){
 		if (abs (x_car- x_enemy)< SPRITE_WIDTH){
-			Audio_PlaySoundEX(SFX_ENEMY);
 			y_pink = SCREEN_HEIGHT-SPRITE_HEIGHT;
 			x_pink = rand()%111 + 70;
 			P_Graphics_setCarPink(x_pink, y_pink, true);
@@ -78,7 +93,7 @@ void Gameplay_Enemies(){
 	else
 		y_pink = y_pink+sgn_y;
 
-	if ((y_pink <SPRITE_HEIGHT && y_pink > SCREEN_HEIGHT-SPRITE_HEIGHT )||( speed ==0)){
+	if ((y_pink <SPRITE_HEIGHT && y_pink > SCREEN_HEIGHT-SPRITE_HEIGHT )||( game_state ==0)){
 		y_pink =SCREEN_HEIGHT-SPRITE_HEIGHT;
 		P_Graphics_setCarPink(x_pink, y_pink, true);
 	}else{

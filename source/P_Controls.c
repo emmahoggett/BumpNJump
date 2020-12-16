@@ -10,9 +10,10 @@ void handleKeys(){
 		unsigned keys = keysHeld();
     	//Modify position of the sprite accordingly
     	if((keys & KEY_RIGHT)) Gameplay_handleInput(RIGHT);
-    	if((keys & KEY_DOWN)) Gameplay_handleInput(SPEED);
+    	if((keys & KEY_DOWN)) Gameplay_handleInput(DOWN);
+    	if((keys & KEY_UP)) Gameplay_handleInput(UP);
     	if((keys & KEY_LEFT)) Gameplay_handleInput(LEFT);
-    	if ((keys & KEY_UP)) Gameplay_handleInput(JUMP);
+    	if ((keys & KEY_A)) Gameplay_handleInput(JUMP);
     	if ((keys & KEY_START))Gameplay_handleInput(START);
 }
 
@@ -22,10 +23,11 @@ void handleTouch(){
 	int x, y;
 	if ((keysDown() & KEY_TOUCH) && jump == 0){
 		touchRead(&touch);
-		Gameplay_handleInput(SPEED);
 		x = touch.px; y = touch.py;
 		if (x < 128)  Gameplay_handleInput(RIGHT);
-		else if (x > 128) Gameplay_handleInput(LEFT);
+		else if (x >= 128) Gameplay_handleInput(LEFT);
+		if (y < 96)  Gameplay_handleInput(UP);
+		else if (y >= 96) Gameplay_handleInput(DOWN);
 		iter--;
 		if (iter != 0)jump = 1;
 		else jump = 0;

@@ -15,7 +15,8 @@ enum ACTION{
 	JUMP,
 	LEFT,
 	RIGHT,
-	SPEED,
+	UP,
+	DOWN,
 	START,
 };
 

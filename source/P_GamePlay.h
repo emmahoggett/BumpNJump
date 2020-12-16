@@ -8,9 +8,11 @@
 #include "soundbank.h"
 #include "P_Score.h"
 #include "P_Timer.h"
+#include "P_Controls.h"
 
 void Gameplay_Init();
 void Gameplay_handleInput(enum ACTION a);
+
 void Gameplay_Update();
 
 void Gameplay_Enemies();
