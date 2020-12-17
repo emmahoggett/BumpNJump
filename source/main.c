@@ -1,8 +1,3 @@
-/*
- * Template Nintendo DS
- * May 2011
- */
-
 #include <nds.h>
 #include <stdio.h>
 
@@ -15,9 +10,7 @@ int main(void) {
 	P_InitNDS();
 
 	while(1){
-		handleKeys();
-		handleTouch();
-		Gameplay_Update();
+		P_Game();
 		swiWaitForVBlank();
 	}
 }

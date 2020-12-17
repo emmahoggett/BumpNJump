@@ -4,7 +4,7 @@ void Audio_Init(){
 	//Init the sound library
 	mmInitDefaultMem((mm_addr)soundbank_bin);
 	//Load module
-	mmLoad(MOD_RETROGAMES_INGAME3); /// Partie qui ne marche pas
+	mmLoad(MOD_RETROGAMES_INGAME3);
 	//Load effects
 	mmLoadEffect(SFX_JUMP);
 	mmLoadEffect(SFX_ENEMY);

@@ -14,6 +14,8 @@ void Gameplay_Init();
 void Gameplay_handleInput(enum ACTION a);
 
 void Gameplay_Update();
+void Gameplay_GraphicsToggle();
+void P_Game();
 
 void Gameplay_Enemies();
 

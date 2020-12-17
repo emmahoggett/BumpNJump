@@ -33,7 +33,6 @@ void updateScore(int speed, int touch, int enemy)
 	if(score > max_score)
 	{
 		max_score = score;
-		writeMaxScore();
 		displayMaxScore();
 	}
 }
@@ -98,6 +97,7 @@ void writeMaxScore()
 		//Close the file
 		fclose(file);
 	}
+	score = 0;
 }
 
 /*

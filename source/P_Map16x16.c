@@ -52,6 +52,15 @@ void P_Map16x16_scrolling_BG3(int _speed){
 	if (bg3_main>=-_speed-1 && bg3_main<=0)irqEnable(IRQ_TIMER0);
 }
 
+int scroll_pos(int bg_num){
+	if (bg_num ==2)return bg2_sub;
+	else return bg3_main;
+}
+
+void P_Map16x16_scrolling_Init(){
+	bg3_main = 1; bg2_sub = 193;
+}
+
 void P_Map16x16_configureStart(){
 	BGCTRL[1] =  BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(12) | BG_TILE_BASE(4);
 	dmaCopy(startscreenmainTiles,BG_TILE_RAM(4),startscreenmainTilesLen);
@@ -117,12 +126,13 @@ void P_Graphics_configureSprites(){
 }
 
 
+
 void P_Graphics_setCarRed(int sprite_x, bool hide){
-	oamSet(&oamSub, 	// oam handler
-		2,				// Number of sprite
-		sprite_x, 95,			// Coordinates
+	oamSet(&oamSub, 				// oam handler
+		2,							// Number of sprite
+		sprite_x, 95,				// Coordinates
 		0,							// Priority
-		0,					// Palette to use
+		0,							// Palette to use
 		SpriteSize_16x16,			// Sprite size
 		SpriteColorFormat_16Color,	// Color format
 		gfx_red,			// Loaded graphic to display
@@ -138,11 +148,11 @@ void P_Graphics_setCarRed(int sprite_x, bool hide){
 
 
 void P_Graphics_setCarPink(int sprite_x, int sprite_y, bool hide){
-	oamSet(&oamSub, 	// oam handler
-		1,				// Number of sprite
+	oamSet(&oamSub, 				// oam handler
+		1,							// Number of sprite
 		sprite_x, sprite_y,			// Coordinates
 		0,							// Priority
-		1,					// Palette to use
+		1,							// Palette to use
 		SpriteSize_16x16,			// Sprite size
 		SpriteColorFormat_16Color,	// Color format
 		gfx_pink,			// Loaded graphic to display
@@ -157,11 +167,11 @@ void P_Graphics_setCarPink(int sprite_x, int sprite_y, bool hide){
 }
 
 void P_Graphics_setCarJump(int sprite_x, bool hide){
-	oamSet(&oamSub, 	// oam handler
-		0,				// Number of sprite
-		sprite_x-8, 95,			// Coordinates
+	oamSet(&oamSub, 				// oam handler
+		0,							// Number of sprite
+		sprite_x-8, 95,				// Coordinates
 		0,							// Priority
-		2,					// Palette to use
+		2,							// Palette to use
 		SpriteSize_32x32,			// Sprite size
 		SpriteColorFormat_16Color,	// Color format
 		gfx_jump,			// Loaded graphic to display
