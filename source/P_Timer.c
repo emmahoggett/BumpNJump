@@ -1,3 +1,11 @@
+/*
+ * P_Timer.c
+ *
+ * Created on: 		December 18, 2020
+ * Authors :	 	Durand Mathilde <mathilde.durand@epfl.ch> &
+ * 					Emma Hoggett <emma.hoggett@epfl.ch>
+ */
+
 #include "P_Timer.h"
 
 int i, j, timer_ticks0, timer_ticks1;

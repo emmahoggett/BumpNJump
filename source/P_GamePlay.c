@@ -1,3 +1,11 @@
+/*
+ * P_GamePlay.c
+ *
+ * Created on: 		December 18, 2020
+ * Authors :	 	Durand Mathilde <mathilde.durand@epfl.ch> &
+ * 					Emma Hoggett <emma.hoggett@epfl.ch>
+ */
+
 #include "P_GamePlay.h"
 
 

@@ -1,10 +1,30 @@
+/*
+ * P_Map16x16.c
+ *
+ * Created on: 		December 18, 2020
+ * Authors :	 	Durand Mathilde <mathilde.durand@epfl.ch> &
+ * 					Emma Hoggett <emma.hoggett@epfl.ch>
+ */
+
 #include "P_Map16x16.h"
 
 int i, bg3_main = 1,bg2_sub = 193;
 
+void P_Map16x16_configureBG0(){
+	//Initialize Background
+	BGCTRL[0] =  BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(9) | BG_TILE_BASE(2);
 
+	// Transfer of the image and the palette to the engine
+	dmaCopy(warningTiles,(u8*)BG_TILE_RAM(2),warningTilesLen);
+	dmaCopy(warningPal,&BG_PALETTE[160],warningPalLen);
+	int i = 32*32;
+	while(i--)
+		BG_MAP_RAM(9)[i] = 0;
+
+}
 
 void P_Map16x16_configureBG3(){
+	//Initialize Background
 	BGCTRL[3] =  BG_32x64 | BG_COLOR_16 | BG_MAP_BASE(7) | BG_TILE_BASE(0);
 
 	// Transfer of the image and the palette to the engine
@@ -22,6 +42,7 @@ void P_Map16x16_configureBG3(){
 }
 
 void P_Map16x16_configureBG2(){
+	//Initialize Background
 	BGCTRL[2] = BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(10) | BG_TILE_BASE(3);
 
 	dmaCopy(numbersTiles,(u8*)BG_TILE_RAM(3),numbersTilesLen);
@@ -35,16 +56,6 @@ void P_Map16x16_configureBG2(){
 		BG_MAP_RAM(10)[i] = 0;
 }
 
-void P_Map16x16_configureBG0(){
-	BGCTRL[0] =  BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(9) | BG_TILE_BASE(2);
-	// Transfer of the image and the palette to the engine
-	dmaCopy(warningTiles,(u8*)BG_TILE_RAM(2),warningTilesLen);
-	dmaCopy(warningPal,&BG_PALETTE[160],warningPalLen);
-	int i = 32*32;
-	while(i--)
-		BG_MAP_RAM(9)[i] = 0;
-
-}
 
 void P_Map16x16_scrolling_BG3(int _speed){
 	REG_BG3VOFS = bg3_main;
@@ -62,6 +73,7 @@ void P_Map16x16_scrolling_Init(){
 }
 
 void P_Map16x16_configureStart(){
+	//Initialize Background
 	BGCTRL[1] =  BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(12) | BG_TILE_BASE(4);
 	dmaCopy(startscreenmainTiles,BG_TILE_RAM(4),startscreenmainTilesLen);
 	dmaCopy(startscreenmainPal,&BG_PALETTE[208],startscreenmainPalLen);
@@ -70,6 +82,7 @@ void P_Map16x16_configureStart(){
 }
 
 void P_Map16x16_configureBG2_Sub(){
+	//Initialize Background
 	BGCTRL_SUB[2] =  BG_32x64 | BG_COLOR_16 | BG_MAP_BASE(0) | BG_TILE_BASE(1);
 
 	// Transfer of the image and the palette to the engine
@@ -93,33 +106,36 @@ void P_Map16x16_scrolling_BG2_Sub(int _speed){
 }
 
 void P_Map16x16_Init(){
-
+	// Configure the main engine backgrounds
 	P_Map16x16_configureBG3();
 	P_Map16x16_configureBG2();
 	P_Map16x16_configureStart();
 	P_Map16x16_configureBG0();
 
+	// Configure the sub engine backgrounds
 	P_Map16x16_configureBG2_Sub();
+
+	// Configure the sub engine sprites
 	P_Graphics_configureSprites();
 }
 
 void P_Graphics_configureSprites(){
-	//Allocate space for the graphic to show in the sprite
+	//Allocate space for the graphic to show in the sprites (enemies, red car, jump animation)
 	gfx_red = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_16Color);
 	gfx_jump = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_16Color);
 	gfx_pink = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_16Color);
 
-	//Copy data for the graphic (palette and bitmap)
+	//Copy data for the graphic (palette)
 	dmaCopy(carredPal, SPRITE_PALETTE_SUB, carredPalLen);
 	dmaCopy(carpinkPal, &SPRITE_PALETTE_SUB[carredPalLen/2], carpinkPalLen);
 	dmaCopy(carjumpPal, &SPRITE_PALETTE_SUB[carredPalLen/2 + carpinkPalLen/2], carjumpPalLen);
 
-	//Copy data for the graphic (palette and bitmap)
+	//Copy data for the graphic (tiles)
 	dmaCopy(carredTiles, gfx_red, carredTilesLen);
 	dmaCopy(carpinkTiles, gfx_pink, carpinkTilesLen);
 	dmaCopy(carjumpTiles, gfx_jump, carjumpTilesLen);
 
-
+	//Show the red car and hide the jump animation and the enemies
 	P_Graphics_setCarRed(100, false);
 	P_Graphics_setCarPink(0, 0, true);
 	P_Graphics_setCarJump(100, true);
@@ -130,7 +146,7 @@ void P_Graphics_configureSprites(){
 void P_Graphics_setCarRed(int sprite_x, bool hide){
 	oamSet(&oamSub, 				// oam handler
 		2,							// Number of sprite
-		sprite_x, 95,				// Coordinates
+		sprite_x, POS_REDCAR,		// Coordinates
 		0,							// Priority
 		0,							// Palette to use
 		SpriteSize_16x16,			// Sprite size
