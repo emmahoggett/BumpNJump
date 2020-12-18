@@ -62,17 +62,25 @@ void P_Game(){
 }
 
 void Gameplay_GraphicsToggle(){
+	int i;
+	for (i = 0; i<32*32; i++){
+		BG_MAP_RAM(10)[i] = 0;
+	}
 	if (game_state == 0){
 		writeMaxScore();
 		speed = 0;
 		P_Map16x16_scrolling_Init();
-		REG_DISPCNT = ~(DISPLAY_BG2_ACTIVE) & ~(DISPLAY_BG3_ACTIVE) & ~(DISPLAY_BG0_ACTIVE) & ~(MODE_0_2D);
-		REG_DISPCNT = MODE_0_2D | DISPLAY_BG1_ACTIVE;
+		REG_DISPCNT = ~(DISPLAY_BG1_ACTIVE) & ~(DISPLAY_BG3_ACTIVE) & ~(DISPLAY_BG0_ACTIVE) & ~(MODE_0_2D);
+		REG_DISPCNT = MODE_0_2D | DISPLAY_BG1_ACTIVE |DISPLAY_BG2_ACTIVE;
+
+		displayMaxScore_Start(game_state);
 	}else {
 		readMaxScore();
-		REG_DISPCNT = ~(DISPLAY_BG1_ACTIVE) & ~(MODE_0_2D);
-		REG_DISPCNT = MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG2_ACTIVE | DISPLAY_BG3_ACTIVE;
+		REG_DISPCNT = ~(DISPLAY_BG1_ACTIVE) & ~(MODE_0_2D) & ~(DISPLAY_BG2_ACTIVE);
+		REG_DISPCNT = MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG3_ACTIVE;
+		displayMaxScore();
 	}
+
 }
 
 void carTouched(int x_enemy, int y_enemy){

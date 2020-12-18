@@ -43,7 +43,7 @@ void P_Map16x16_configureBG3(){
 
 void P_Map16x16_configureBG2(){
 	//Initialize Background
-	BGCTRL[2] = BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(10) | BG_TILE_BASE(3);
+	BGCTRL[1] = BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(10) | BG_TILE_BASE(3);
 
 	dmaCopy(numbersTiles,(u8*)BG_TILE_RAM(3),numbersTilesLen);
 	dmaCopy(numbersPal,&BG_PALETTE[128],numbersPalLen);
@@ -74,10 +74,16 @@ void P_Map16x16_scrolling_Init(){
 
 void P_Map16x16_configureStart(){
 	//Initialize Background
-	BGCTRL[1] =  BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(12) | BG_TILE_BASE(4);
+	BGCTRL[2] = BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(12) | BG_TILE_BASE(4);
 	dmaCopy(startscreenmainTiles,BG_TILE_RAM(4),startscreenmainTilesLen);
-	dmaCopy(startscreenmainPal,&BG_PALETTE[208],startscreenmainPalLen);
+	dmaCopy(startscreenmainPal,&BG_PALETTE[0xD0],startscreenmainPalLen);
 	dmaCopy(startscreenmainMap,BG_MAP_RAM(12),startscreenmainMapLen);
+
+	for (i = 0; i<32*32;i++){
+		//Render the number
+		BG_MAP_RAM(12)[i] = startscreenmainMap[(i)] | TILE_PALETTE(13);
+	}
+	displayMaxScore_Start(0);
 
 }
 

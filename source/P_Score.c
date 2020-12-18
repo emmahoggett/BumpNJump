@@ -55,6 +55,7 @@ void updateScore(int speed, int touch, int enemy)
 
 void displayScore()
 {
+
 	int j,i, number;
 	//i, digit to display
 	for(i = 5; i>0; i--)
@@ -67,6 +68,24 @@ void displayScore()
 		number = number % 10;
 		//Render the number
 		BG_MAP_RAM(10)[32 +6-i] = numbersMap[(number)] | TILE_PALETTE(9);
+	}
+}
+
+void displayMaxScore_Start(int _game_state)
+{
+	readMaxScore();
+	int i, j, number;
+	for(i = 5; i>0; i--)
+	{
+		j = i-1; number = 1;
+		while(j--)number = number*10;
+		number = max_score / number;
+		number = number % 10;
+		if (_game_state){
+			BG_MAP_RAM(10)[(16)*32 +21-i] = 0;
+		} else {
+			BG_MAP_RAM(10)[(16)*32 +21-i] = numbersMap[(number)] | TILE_PALETTE(8);
+		}
 	}
 }
 
@@ -114,6 +133,7 @@ void writeMaxScore()
  */
 void displayMaxScore()
 {
+
 	int i, j, number;
 	for(i = 5; i>0; i--)
 	{

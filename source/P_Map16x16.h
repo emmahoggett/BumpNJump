@@ -9,6 +9,7 @@
 #include <nds.h>
 #include <stdio.h>
 #include "BumpNJumpDefines.h"
+#include "P_Score.h"
 #include "P_Graphics.h"
 #include "road.h"
 #include "numbers.h"
