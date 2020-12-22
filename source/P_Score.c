@@ -16,11 +16,15 @@ int score = 0, max_score = 0;
 void updateScore(int speed, int touch, int enemy)
 {
 	/*
-	 * Depending on the lines increase the score
-	 *  1 point - one single line
-	 *  4 points - 2 lines
-	 *  8 points - 3 lines
-	 *  10 points - 4 lines
+	 * Depending on the speed increase the score
+	 *  1 point - 1 speed
+	 *  2 points - 2 speed
+	 *  3 points - 3 speed
+	 *  4 points - 4 speed
+	 *	5 points - 5 speed
+	 *
+	 *	If the enemy is touched without jumping, the enemy score is removed
+	 *	If the enemy is touched while jumping, the touch score is added
 	 */
 	switch(speed)
 	{
@@ -46,10 +50,10 @@ void updateScore(int speed, int touch, int enemy)
 
 
 /*
- * This function displays the score counter on the right of the
- * screen (looking sidewise) using the palette 9 (green color preloaded)
+ * This function displays the score counter on the left of the
+ * screen using the palette 9 (white color preloaded)
  *
- * The map (24) is modified accordingly to the points stored in the
+ * The map (10) is modified accordingly to the points stored in the
  * variable store
  */
 
@@ -70,7 +74,11 @@ void displayScore()
 		BG_MAP_RAM(10)[32 +6-i] = numbersMap[(number)] | TILE_PALETTE(9);
 	}
 }
-
+/*
+ * This function displays the highest score obtained in previous games
+ * on the center part of the screen at the start menu. It uses the palette 8
+ * (with orange color preloaded)
+ */
 void displayMaxScore_Start(int _game_state)
 {
 	readMaxScore();
@@ -92,7 +100,7 @@ void displayMaxScore_Start(int _game_state)
 
 /*
  * This function reads the highest score obtained in previous games and
- * stored in a text file called /Tetrisrecord.txt. The read value is assigned
+ * stored in a text file called /BumpNJumprecord.txt. The read value is assigned
  * to the variable max_score
  */
 void readMaxScore()
@@ -110,7 +118,7 @@ void readMaxScore()
 
 /*
  * This function writes the value of the variable max_score
- * into the text file /tetrisrecord
+ * into the text file /BumpNJumprecord
  */
 void writeMaxScore()
 {
@@ -128,8 +136,8 @@ void writeMaxScore()
 
 /*
  * This function displays the highest score obtained in previous games
- * on the left part of bottom the screen (looking sideways). It uses the
- * palette 8 (with red color preloaded)
+ * on the left part of top the screen. It uses the palette 8 (with orange color
+ * preloaded)
  */
 void displayMaxScore()
 {

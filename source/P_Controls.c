@@ -63,7 +63,8 @@ void handleTouch(){
 		if (iter == 0){
 			iter = 100; jump = 0;
 		}
-	} else if (x == 0 && y == 0){ //The screen is not touched
+	} else if (x == 0 && y == 0){
+		//The screen is not touched
 		if (jump == 0)jump = 1;
 		else if (jump == 2) jump = 3;
 	}

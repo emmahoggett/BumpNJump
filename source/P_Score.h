@@ -11,7 +11,7 @@
 
 void updateScore();
 void displayScore();
-void  displayMaxScore_Start(int _game_state);
+void displayMaxScore_Start(int _game_state);
 void readMaxScore();
 void writeMaxScore();
 void displayMaxScore();

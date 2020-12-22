@@ -17,7 +17,7 @@ void timer0_IRQ(){
 	if (timer_ticks0%2)EraseWarning();
 	else DisplayWarning();
 	timer_ticks0++;
-	if (timer_ticks0>=10){
+	if (timer_ticks0>=10){ //Blink for 1 s
 		irqDisable(IRQ_TIMER0);
 		timer_ticks0 = 0;
 	}
@@ -28,7 +28,7 @@ void timer1_IRQ(){
 	int x_pos = Get_Car_Pos();
 	DisplayJump(x_pos);
 	timer_ticks1++;
-	if (timer_ticks1>=5){
+	if (timer_ticks1>=5){ // Jump animation last 500 ms
 		EraseJump(x_pos);
 		irqDisable(IRQ_TIMER1);
 		timer_ticks1 = 0;
@@ -37,14 +37,16 @@ void timer1_IRQ(){
 
 
 void P_Timer_Init(){
+	// Setting the interrupt for the warning sign
 	timer_ticks0 = 0;
 	TIMER_CR(0) = TIMER_ENABLE | TIMER_DIV_1024 | TIMER_IRQ_REQ;
-	TIMER_DATA(0) = TIMER_FREQ_1024(10);
+	TIMER_DATA(0) = TIMER_FREQ_1024(10); // Every 100 ms
 	irqSet(IRQ_TIMER0, &timer0_IRQ);
 
+	// Setting the interrupt for the jump animation
 	timer_ticks1 = 0;
 	TIMER_CR(1) = TIMER_ENABLE | TIMER_DIV_1024 | TIMER_IRQ_REQ;
-	TIMER_DATA(1) = TIMER_FREQ_1024(10);
+	TIMER_DATA(1) = TIMER_FREQ_1024(10);  // Every 100 ms
 	irqSet(IRQ_TIMER1, &timer1_IRQ);
 
 }
