@@ -29,20 +29,19 @@ void handleTouch(){
 	scanKeys();
 	touchPosition touch;
 	int x, y;
-	if ((keysDown() & KEY_TOUCH) && jump == 0){
+	if ((keysHeld() & KEY_TOUCH)){
 		touchRead(&touch);
 		x = touch.px; y = touch.py;
-		if (x < 128)  Gameplay_handleInput(RIGHT);
-		else if (x >= 128) Gameplay_handleInput(LEFT);
+		if (x < 128)  Gameplay_handleInput(LEFT);
+		else if (x >= 128) Gameplay_handleInput(RIGHT);
 		if (y < 96)  Gameplay_handleInput(UP);
 		else if (y >= 96) Gameplay_handleInput(DOWN);
-		iter--;
-		if (iter != 0)jump = 1;
-		else jump = 0;
+		if (jump == 0) jump = 1;
+		else {
+			jump = 0;
+			Gameplay_handleInput(JUMP);
+		}
 
-	} else if ((keysDown() & KEY_TOUCH) && jump == 1){
-		 Gameplay_handleInput(JUMP);
-		 jump = 0;
 	}
 }
 
