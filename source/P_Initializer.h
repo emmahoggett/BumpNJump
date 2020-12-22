@@ -11,5 +11,9 @@
 #include "P_Audio.h"
 #include "P_Timer.h"
 
+
+/*
+ * \brief Initialize the engines, backgrounds, timers and audio
+ */
 void P_InitNDS();
 
