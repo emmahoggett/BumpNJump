@@ -13,4 +13,6 @@
 void handleKeys();
 void handleTouch();
 
+void initJumpTimer();
+
 

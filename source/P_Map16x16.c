@@ -142,7 +142,7 @@ void P_Graphics_configureSprites(){
 	dmaCopy(carjumpTiles, gfx_jump, carjumpTilesLen);
 
 	//Show the red car and hide the jump animation and the enemies
-	P_Graphics_setCarRed(100, false);
+	P_Graphics_setCarRed(128, false);
 	P_Graphics_setCarPink(0, 0, true);
 	P_Graphics_setCarJump(100, true);
 }

@@ -10,7 +10,9 @@
 #include "P_GamePlay.h"
 
 
-int  comptBg=192, jump = 0, iter = 50;
+int  comptBg=192, jump = 0, iter = 100;
+int x_prev = 128, y_prev = 96;
+
 
 
 void handleKeys(){
@@ -29,21 +31,29 @@ void handleTouch(){
 	scanKeys();
 	touchPosition touch;
 	int x, y;
-	if ((keysHeld() & KEY_TOUCH)){
-		touchRead(&touch);
-		x = touch.px; y = touch.py;
-		if (x < 128)  Gameplay_handleInput(LEFT);
-		else if (x >= 128) Gameplay_handleInput(RIGHT);
-		if (y < 96)  Gameplay_handleInput(UP);
-		else if (y >= 96) Gameplay_handleInput(DOWN);
+	touchRead(&touch);
+	x = touch.px; y = touch.py;
+	if (x || y){
+
+		if (x < x_prev)  Gameplay_handleInput(LEFT);
+		else if (x >= x_prev) Gameplay_handleInput(RIGHT);
+
+		if (y < y_prev)  Gameplay_handleInput(UP);
+		else if (y >= y_prev) Gameplay_handleInput(DOWN);
+
 		if (jump == 0) jump = 1;
-		else {
+		else if (jump == 2) {
 			jump = 0;
 			Gameplay_handleInput(JUMP);
 		}
-
+		iter--;
+		if (iter == 0){
+			iter = 100; jump = 0;
+		}
+	} else if (x == 0 && y == 0 && jump == 1){
+		jump = 2;
 	}
-}
 
+}
 
 
