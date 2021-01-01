@@ -22,7 +22,8 @@
 //Pointer to the graphic buffer where to store the sprites
 u16* gfx_red;
 u16* gfx_jump;
-u16* gfx_pink;
+u16* gfx_pink_up;
+u16* gfx_pink_down;
 
 /*
  * \brief Configure the background 1
@@ -65,7 +66,8 @@ void P_Map16x16_Init();
 
 void P_Graphics_configureSprites();
 void P_Graphics_setCarRed(int sprite_x, bool hide);
-void P_Graphics_setCarPink(int sprite_x, int sprite_y, bool hide);
+void P_GraphicsSub_setCarPink(int sprite_x, int sprite_y, bool hide, int palette);
+void P_GraphicsMain_setCarPink(int sprite_x, int sprite_y, bool hide);
 void P_Graphics_setCarJump(int sprite_x, bool hide);
 
 

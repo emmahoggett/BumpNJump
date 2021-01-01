@@ -19,8 +19,10 @@ void P_Graphics_setup_main(){
 
 	//Set up memory bank to work iyln sprite mode (offset since we are using VRAM A for backgrounds)
 	VRAM_D_CR = VRAM_ENABLE | VRAM_D_SUB_SPRITE;
+	VRAM_B_CR = VRAM_ENABLE | VRAM_B_MAIN_SPRITE_0x06400000;
 	//Initialize sprite manager and the engine
 	oamInit(&oamSub, SpriteMapping_1D_32, false);
+	oamInit(&oamMain, SpriteMapping_1D_32, false);
 
 
 }

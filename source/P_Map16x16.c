@@ -129,22 +129,27 @@ void P_Graphics_configureSprites(){
 	//Allocate space for the graphic to show in the sprites (enemies, red car, jump animation)
 	gfx_red = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_16Color);
 	gfx_jump = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_16Color);
-	gfx_pink = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_16Color);
+	gfx_pink_down = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_16Color);
+	gfx_pink_up = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_16Color);
 
 	//Copy data for the graphic (palette)
 	dmaCopy(carredPal, SPRITE_PALETTE_SUB, carredPalLen);
-	dmaCopy(carpinkPal, &SPRITE_PALETTE_SUB[carredPalLen/2], carpinkPalLen);
-	dmaCopy(carjumpPal, &SPRITE_PALETTE_SUB[carredPalLen/2 + carpinkPalLen/2], carjumpPalLen);
+	dmaCopy(carjumpPal, &SPRITE_PALETTE_SUB[16], carjumpPalLen);
+	dmaCopy(carpinkPal, &SPRITE_PALETTE_SUB[32], carpinkPalLen);
+
+	dmaCopy(carpinkPal, SPRITE_PALETTE, carpinkPalLen);
 
 	//Copy data for the graphic (tiles)
 	dmaCopy(carredTiles, gfx_red, carredTilesLen);
-	dmaCopy(carpinkTiles, gfx_pink, carpinkTilesLen);
 	dmaCopy(carjumpTiles, gfx_jump, carjumpTilesLen);
+	dmaCopy(carpinkTiles, gfx_pink_down, carpinkTilesLen);
+	dmaCopy(carpinkTiles, gfx_pink_up, carpinkTilesLen);
 
 	//Show the red car and hide the jump animation and the enemies
 	P_Graphics_setCarRed(128, false);
-	P_Graphics_setCarPink(0, 0, true);
+	P_GraphicsSub_setCarPink(0, 0, true, 2);
 	P_Graphics_setCarJump(100, true);
+	P_GraphicsMain_setCarPink(0, 0, true);
 }
 
 
@@ -169,15 +174,15 @@ void P_Graphics_setCarRed(int sprite_x, bool hide){
 }
 
 
-void P_Graphics_setCarPink(int sprite_x, int sprite_y, bool hide){
+void P_GraphicsSub_setCarPink(int sprite_x, int sprite_y, bool hide, int palette){
 	oamSet(&oamSub, 				// oam handler
 		1,							// Number of sprite
 		sprite_x, sprite_y,			// Coordinates
 		0,							// Priority
-		1,							// Palette to use
+		palette,							// Palette to use
 		SpriteSize_16x16,			// Sprite size
 		SpriteColorFormat_16Color,	// Color format
-		gfx_pink,			// Loaded graphic to display
+		gfx_pink_down,			// Loaded graphic to display
 		-1,				// Affine rotation to use (-1 none)
 		false,			// Double size if rotating
 		hide,			// Hide this sprite
@@ -188,12 +193,31 @@ void P_Graphics_setCarPink(int sprite_x, int sprite_y, bool hide){
 	oamUpdate(&oamSub);
 }
 
+void P_GraphicsMain_setCarPink(int sprite_x, int sprite_y, bool hide){
+	oamSet(&oamMain, 				// oam handler
+		3,							// Number of sprite
+		sprite_x, sprite_y,			// Coordinates
+		0,							// Priority
+		1,							// Palette to use
+		SpriteSize_16x16,			// Sprite size
+		SpriteColorFormat_16Color,	// Color format
+		gfx_pink_up,			// Loaded graphic to display
+		-1,				// Affine rotation to use (-1 none)
+		false,			// Double size if rotating
+		hide,			// Hide this sprite
+		false, false,	// Horizontal or vertical flip
+		false			// Mosaic
+		);
+	//Update the sprites
+	oamUpdate(&oamMain);
+}
+
 void P_Graphics_setCarJump(int sprite_x, bool hide){
 	oamSet(&oamSub, 				// oam handler
 		0,							// Number of sprite
 		sprite_x-8, 95,				// Coordinates
 		0,							// Priority
-		2,							// Palette to use
+		1,							// Palette to use
 		SpriteSize_32x32,			// Sprite size
 		SpriteColorFormat_16Color,	// Color format
 		gfx_jump,			// Loaded graphic to display

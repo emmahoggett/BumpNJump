@@ -43,6 +43,7 @@ void Gameplay_Update(){
 	P_Map16x16_scrolling_BG2_Sub(speed);
 
 	Gameplay_Enemies();
+	P_GraphicsMain_setCarPink(100, 100, false);
 	if ( Get_TimerTicks1() == 0) {
 		EraseJump(x_car);
 		carTouched(x_pink, y_pink);
@@ -97,31 +98,27 @@ void carJump(int x_enemy, int y_enemy){
 		if (abs (x_car- x_enemy)< SPRITE_WIDTH){
 			y_pink = SCREEN_HEIGHT-SPRITE_HEIGHT;
 			x_pink = rand()%111 + 70;
-			P_Graphics_setCarPink(x_pink, y_pink, true);
+			P_GraphicsSub_setCarPink(x_pink, y_pink, true, 2);
 			touch = 100;
 		}
 	}
 }
 
 void Gameplay_Enemies(){
-	int sgn_x= rand()%3 -1,sgn_y= rand()%3 -1;
+	int sgn_x= rand()%3 -1;
 	if (x_pink+sgn_x < 70 )
 		x_pink =70;
 	else if (x_pink+sgn_x > 180 )
 		x_pink =180;
 	else x_pink= x_pink+sgn_x;
-	if (y_pink > 128-SPRITE_HEIGHT)
-		y_pink--;
-	else if (y_pink < 64-SPRITE_HEIGHT)
-		y_pink++;
-	else
-		y_pink = y_pink+sgn_y;
 
-	if ((y_pink <SPRITE_HEIGHT && y_pink > SCREEN_HEIGHT-SPRITE_HEIGHT )||( game_state ==0)){
+	y_pink = (y_pink - 1)%192;
+
+	if ((y_pink <0 && y_pink > SCREEN_HEIGHT-SPRITE_HEIGHT )||( game_state ==0)){
 		y_pink =SCREEN_HEIGHT-SPRITE_HEIGHT;
-		P_Graphics_setCarPink(x_pink, y_pink, true);
+		P_GraphicsSub_setCarPink(x_pink, y_pink, true, 2);
 	}else{
-		P_Graphics_setCarPink(x_pink, y_pink, false);
+		P_GraphicsSub_setCarPink(x_pink, y_pink, false, 2);
 	}
 
 
