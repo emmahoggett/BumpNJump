@@ -18,6 +18,7 @@
 #include "P_Timer.h"
 #include "P_Controls.h"
 
+
 void Gameplay_Init();
 void Gameplay_handleInput(enum ACTION a);
 
@@ -28,5 +29,5 @@ void P_Game();
 void Gameplay_Enemies();
 
 void carTouched(int x_enemy, int y_enemy);
-void carJump(int x_enemy, int y_enemy);
+void carJump();
 int Get_Car_Pos();

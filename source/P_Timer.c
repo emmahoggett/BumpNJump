@@ -11,9 +11,6 @@
 int i, j, timer_ticks0, timer_ticks1;
 
 void timer0_IRQ(){
-
-	swiWaitForVBlank();
-
 	if (timer_ticks0%2)EraseWarning();
 	else DisplayWarning();
 	timer_ticks0++;
@@ -28,10 +25,10 @@ void timer1_IRQ(){
 	int x_pos = Get_Car_Pos();
 	DisplayJump(x_pos);
 	timer_ticks1++;
-	if (timer_ticks1>=5){ // Jump animation last 500 ms
+	if (timer_ticks1>=7){ // Jump animation last 700 ms
 		EraseJump(x_pos);
-		irqDisable(IRQ_TIMER1);
 		timer_ticks1 = 0;
+		irqDisable(IRQ_TIMER1);
 	}
 }
 
@@ -80,3 +77,5 @@ void EraseJump(int x){
 }
 
 int Get_TimerTicks1(){return timer_ticks1;}
+
+

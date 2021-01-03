@@ -136,6 +136,10 @@ void P_Graphics_configureSprites(){
 	dmaCopy(carredPal, SPRITE_PALETTE_SUB, carredPalLen);
 	dmaCopy(carjumpPal, &SPRITE_PALETTE_SUB[16], carjumpPalLen);
 	dmaCopy(carpinkPal, &SPRITE_PALETTE_SUB[32], carpinkPalLen);
+	SPRITE_PALETTE_SUB[51] = ARGB16(1,0,31,31);
+	SPRITE_PALETTE_SUB[49] = ARGB16(1,0,20,31);
+	SPRITE_PALETTE_SUB[67] = ARGB16(1,31,31,0);
+	SPRITE_PALETTE_SUB[65] = ARGB16(1,31,20,0);
 
 	dmaCopy(carpinkPal, SPRITE_PALETTE, carpinkPalLen);
 
@@ -195,10 +199,10 @@ void P_GraphicsSub_setCarPink(int sprite_x, int sprite_y, bool hide, int palette
 
 void P_GraphicsMain_setCarPink(int sprite_x, int sprite_y, bool hide){
 	oamSet(&oamMain, 				// oam handler
-		3,							// Number of sprite
+		0,							// Number of sprite
 		sprite_x, sprite_y,			// Coordinates
 		0,							// Priority
-		1,							// Palette to use
+		0,							// Palette to use
 		SpriteSize_16x16,			// Sprite size
 		SpriteColorFormat_16Color,	// Color format
 		gfx_pink_up,			// Loaded graphic to display
