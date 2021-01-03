@@ -18,18 +18,20 @@ void Gameplay_handleInput(enum ACTION a){
 	if (game_state == 0 && a !=START) a = -1;
 	switch(a){
 	case JUMP :
-		irqEnable(IRQ_TIMER1);Audio_PlaySoundEX(SFX_JUMP);break;
+		irqEnable(IRQ_TIMER1);
+		Audio_PlaySoundEX(SFX_JUMP);
+		break;
 	case DOWN:
 		if (speed > 0)speed--; break;
 	case UP:
-		if (speed < 5)speed++; break;
+		if (speed < 2)speed++; break;
 	case LEFT:
 		if (x_car >= 70) x_car-=1; break;
 	case RIGHT:
 		if (x_car < 180) x_car++; break;
 	case START:
-		if (game_state == 0) game_state = 1;
-		else game_state = 0;
+		if (game_state) game_state = 0;
+		else game_state = 1;
 		Gameplay_GraphicsToggle();
 	default:
 		break;
@@ -43,14 +45,19 @@ void Gameplay_Update(){
 	Gameplay_Enemies();
 	int timer_jump = Get_TimerTicks1();
 
-	if ( timer_jump == 0) {
+	if (timer_jump == 0) {
 		EraseJump(x_car);
 		carTouched(x_pink, y_pink);
 	} else {
 		carJump();
 	}
 
-	updateScore(speed, touch, enemy);
+	if(timer_jump == 0 && (scroll_pos(2)<=400 && scroll_pos(2)>=390)){
+		Gameplay_handleInput(START);
+	}
+	// ajouter quand les ennemies tombe à l'eau ici
+
+	updateScore(speed, touch, enemy, game_state);
 	enemy = 0; touch = 0;
 }
 
@@ -68,18 +75,19 @@ void Gameplay_GraphicsToggle(){
 	for (i = 0; i<32*32; i++){
 		BG_MAP_RAM(10)[i] = 0;
 	}
-	if (game_state == 0){
+	if (game_state){
+		readMaxScore();
+		REG_DISPCNT = ~(DISPLAY_BG1_ACTIVE) & ~(MODE_0_2D) & ~(DISPLAY_BG2_ACTIVE);
+		REG_DISPCNT = MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG3_ACTIVE;
+		displayMaxScore();
+	}else {
 		writeMaxScore();
 		speed = 0;
 		P_Map16x16_scrolling_Init();
 		REG_DISPCNT = ~(DISPLAY_BG1_ACTIVE) & ~(DISPLAY_BG3_ACTIVE) & ~(DISPLAY_BG0_ACTIVE) & ~(MODE_0_2D);
 		REG_DISPCNT = MODE_0_2D | DISPLAY_BG1_ACTIVE |DISPLAY_BG2_ACTIVE;
 		displayMaxScore_Start(game_state);
-	}else {
-		readMaxScore();
-		REG_DISPCNT = ~(DISPLAY_BG1_ACTIVE) & ~(MODE_0_2D) & ~(DISPLAY_BG2_ACTIVE);
-		REG_DISPCNT = MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG3_ACTIVE;
-		displayMaxScore();
+		updateScore(speed, touch, enemy, game_state);
 	}
 
 }
@@ -115,7 +123,7 @@ void Gameplay_Enemies(){
 	y_pink = y_pink - 1;
 
 	if ((y_pink <0 || y_pink > SCREEN_HEIGHT )||( game_state ==0)){
-		y_pink =SCREEN_HEIGHT;
+		y_pink = SCREEN_HEIGHT;
 		x_pink = rand()%111 + 70;
 		car_pal = rand()%3 + 2;
 		P_GraphicsSub_setCarPink(x_pink, y_pink, true, car_pal);

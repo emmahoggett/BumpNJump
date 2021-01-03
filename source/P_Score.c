@@ -13,7 +13,7 @@
 
 int score = 0, max_score = 0;
 
-void updateScore(int speed, int touch, int enemy)
+void updateScore(int speed, int touch, int enemy, int _game_state)
 {
 	/*
 	 * Depending on the speed increase the score
@@ -38,7 +38,7 @@ void updateScore(int speed, int touch, int enemy)
 	if (enemy > 0) score = score -enemy;
 	if (score < 0) score = 0;
 	//Display the score
-	displayScore();
+	displayScore(_game_state);
 
 	//Update highest score
 	if(score > max_score)
@@ -57,7 +57,7 @@ void updateScore(int speed, int touch, int enemy)
  * variable store
  */
 
-void displayScore()
+void displayScore(int _game_state)
 {
 
 	int j,i, number;
@@ -71,7 +71,11 @@ void displayScore()
 		number = score / number;
 		number = number % 10;
 		//Render the number
-		BG_MAP_RAM(10)[32 +6-i] = numbersMap[(number)] | TILE_PALETTE(9);
+		if (_game_state){
+			BG_MAP_RAM(10)[32 +6-i] = numbersMap[(number)] | TILE_PALETTE(9);
+		}else {
+			BG_MAP_RAM(10)[32 +6-i] = 0;
+		}
 	}
 }
 /*

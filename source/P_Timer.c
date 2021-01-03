@@ -25,7 +25,7 @@ void timer1_IRQ(){
 	int x_pos = Get_Car_Pos();
 	DisplayJump(x_pos);
 	timer_ticks1++;
-	if (timer_ticks1>=7){ // Jump animation last 700 ms
+	if (timer_ticks1>=10){ // Jump animation last 700 ms
 		EraseJump(x_pos);
 		timer_ticks1 = 0;
 		irqDisable(IRQ_TIMER1);

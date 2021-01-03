@@ -8,7 +8,7 @@
 
 #include "P_Map16x16.h"
 
-int i, bg3_main = 1,bg2_sub = 193;
+int i, bg3_main = 1,bg2_sub = 193, bg2_sub_pos = 193;
 
 void P_Map16x16_configureBG0(){
 	//Initialize Background
@@ -64,12 +64,18 @@ void P_Map16x16_scrolling_BG3(int _speed){
 }
 
 int scroll_pos(int bg_num){
-	if (bg_num ==2)return bg2_sub;
+	if (bg_num ==2){
+		int bg_bis = bg2_sub;
+		while (bg_bis <0){
+			bg_bis +=512;
+		}
+		return bg_bis;
+	}
 	else return bg3_main;
 }
 
 void P_Map16x16_scrolling_Init(){
-	bg3_main = 1; bg2_sub = 193;
+	bg3_main = 1; bg2_sub = 193; bg2_sub_pos = 193;
 }
 
 void P_Map16x16_configureStart(){
@@ -152,7 +158,7 @@ void P_Graphics_configureSprites(){
 	//Show the red car and hide the jump animation and the enemies
 	P_Graphics_setCarRed(128, false);
 	P_GraphicsSub_setCarPink(0, 0, true, 2);
-	P_Graphics_setCarJump(100, true);
+	P_Graphics_setCarJump(128, true);
 	P_GraphicsMain_setCarPink(0, 0, true);
 }
 
