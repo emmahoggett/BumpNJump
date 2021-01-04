@@ -55,10 +55,14 @@ void Gameplay_Update(){
 	if(timer_jump == 0 && (scroll_pos(2)<=400 && scroll_pos(2)>=390)){
 		Gameplay_handleInput(START);
 	}
-	// ajouter quand les ennemies tombe à l'eau ici
-
+	int pos_scroll_pink = (scroll_pos(2) + y_pink)%512;
+	if((pos_scroll_pink<=511 && pos_scroll_pink>=416)){
+		y_pink = SCREEN_HEIGHT +1;
+	}
 	updateScore(speed, touch, enemy, game_state);
 	enemy = 0; touch = 0;
+	//Update the sprites
+	P_GraphicsMain_setCarPink(100, 100, false);
 }
 
 

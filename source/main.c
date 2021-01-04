@@ -11,6 +11,8 @@ int main(void) {
 
 	while(1){
 		P_Game();
+		oamUpdate(&oamSub);
+		oamUpdate(&oamMain);
 		swiWaitForVBlank();
 	}
 }
