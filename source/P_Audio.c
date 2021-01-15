@@ -26,14 +26,10 @@ void Audio_PlaySoundEX( int i )
 	sound.id = i;
 	//Set the rate to the default one (1024)
 	sound.rate = 1024;
-	//Set the volume to the maximum (range 0...255)
+	//Set the volume to the maximum - 255 (range 0...255)
 	sound.volume = 255;
-	//Set the panning depending on the effect (0-left....255-right)
-	if (i == SFX_JUMP)
-		sound.panning = 127;
-	else if (i == SFX_ENEMY)
-		sound.panning = 127;
-
+	//Set the panning at the center - 127 (0-left....255-right)
+	sound.panning = 127;
 	//Play the effect using the sound structure
 	mmEffectEx(&sound);
 }
@@ -44,5 +40,5 @@ void Audio_PlayMusic()
 	//Start playing music in a loop
 	mmStart(MOD_RETROGAMES_INGAME3, MM_PLAY_LOOP);
 	//Set module volume to 512 (range 0...1024) using the function mmSetModuleVolume(...)
-	mmSetModuleVolume(1024);
+	mmSetModuleVolume(512);
 }

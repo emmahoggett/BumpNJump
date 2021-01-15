@@ -9,6 +9,7 @@
 
 #include <nds.h>
 
+
 void updateScore();
 void displayScore();
 void displayMaxScore_Start(int _game_state);

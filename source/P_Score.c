@@ -21,7 +21,7 @@ void updateScore(int speed, int touch, int enemy, int _game_state)
 	 *  2 points - 2 speed
 	 *  3 points - 3 speed
 	 *  4 points - 4 speed
-	 *	5 points - 5 speed
+	 *  5 points - 5 speed
 	 *
 	 *	If the enemy is touched without jumping, the enemy score is removed
 	 *	If the enemy is touched while jumping, the touch score is added
@@ -34,9 +34,9 @@ void updateScore(int speed, int touch, int enemy, int _game_state)
 	case 4: score+=4; break;
 	case 5: score+=5; break;
 	}
-	if (touch > 0) score = score+touch;
-	if (enemy > 0) score = score -enemy;
-	if (score < 0) score = 0;
+	if (touch > 0) score = score + touch;
+	if (enemy > 0) score = score - enemy;
+	if (score < 0) score = 0; // Avoid negative score
 	//Display the score
 	displayScore(_game_state);
 

@@ -45,10 +45,17 @@ void DisplayJump(int x);
 void EraseJump(int x);
 
 /*
- * \brief Returns the tick of the timer 1.
+ * \brief Returns the tick of the timer 1. This timer is linked with the car's
+ * jump.
  * This function is used for the P_Gameplay to know if a jump is performed or
  * not.
  */
 int Get_TimerTicks1();
 
+/*
+ * \brief Returns the tick of the timer 2. This timer is linked with the car's
+ * blinking when it is touched by an enemy.
+ * This function is used for the P_Gameplay to know if the car is touched by an
+ * enemy
+ */
 int Get_TimerTicks2();

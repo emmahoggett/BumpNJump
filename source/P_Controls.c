@@ -20,12 +20,12 @@ void handleKeys(){
     	//Modify position of the sprite accordingly
     	if((keys & KEY_RIGHT)) Gameplay_handleInput(RIGHT);
     	if((keys & KEY_DOWN)) Gameplay_handleInput(DOWN);
-    	if((keys & KEY_UP)) Gameplay_handleInput(UP);
+    	if((keysDown() & KEY_UP)) Gameplay_handleInput(UP);
     	if((keys & KEY_LEFT)) Gameplay_handleInput(LEFT);
 
     	//Make the car jump
     	if ((keys & KEY_A)) Gameplay_handleInput(JUMP);
-    	//Bring back to the start menu
+    	//Bring back to the start menu if the start
     	if ((keysDown() & KEY_START))Gameplay_handleInput(START);
 }
 
@@ -49,8 +49,8 @@ void handleTouch(){
 	//The screen is touched
 	if (x || y){
 		//Modify position of the sprite accordingly
-		if (x < 128)  Gameplay_handleInput(LEFT);
-		else if (x >= 128) Gameplay_handleInput(RIGHT);
+		if (x < Get_Car_Pos())  Gameplay_handleInput(LEFT);
+		else if (x >= Get_Car_Pos()) Gameplay_handleInput(RIGHT);
 		if (y < 96)  Gameplay_handleInput(UP);
 		else if (y >= 96) Gameplay_handleInput(DOWN);
 
