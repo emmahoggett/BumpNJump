@@ -64,14 +64,16 @@ void P_Map16x16_scrolling_BG3(int _speed){
 }
 
 int scroll_pos(int bg_num){
+	int bg_bis;
 	if (bg_num ==2){
-		int bg_bis = bg2_sub;
-		while (bg_bis <0){
-			bg_bis +=512;
-		}
-		return bg_bis;
+		bg_bis = bg2_sub;
+	}else{
+		bg_bis = bg3_main;
 	}
-	else return bg3_main;
+	while (bg_bis <0){
+		bg_bis +=512;
+	}
+	return bg_bis;
 }
 
 void P_Map16x16_scrolling_Init(){
@@ -149,10 +151,10 @@ void P_Graphics_configureSprites(){
 	SPRITE_PALETTE_SUB[65] = ARGB16(1,31,20,0);
 
 	dmaCopy(carpinkPal, &SPRITE_PALETTE[32], carpinkPalLen);
-	SPRITE_PALETTE_SUB[51] = ARGB16(1,0,31,31);
-	SPRITE_PALETTE_SUB[49] = ARGB16(1,0,20,31);
-	SPRITE_PALETTE_SUB[67] = ARGB16(1,31,31,0);
-	SPRITE_PALETTE_SUB[65] = ARGB16(1,31,20,0);
+	SPRITE_PALETTE[51] = ARGB16(1,0,31,31);
+	SPRITE_PALETTE[49] = ARGB16(1,0,20,31);
+	SPRITE_PALETTE[67] = ARGB16(1,31,31,0);
+	SPRITE_PALETTE[65] = ARGB16(1,31,20,0);
 
 	//Copy data for the graphic (tiles)
 	dmaCopy(carredTiles, gfx_red, carredTilesLen);
@@ -164,7 +166,7 @@ void P_Graphics_configureSprites(){
 	P_Graphics_setCarRed(128, false);
 	P_GraphicsSub_setCarPink(0, 0, true, 2);
 	P_Graphics_setCarJump(128, true);
-	P_GraphicsMain_setCarPink(100, 100, true);
+	P_GraphicsMain_setCarPink(0, 0, true, 2);
 }
 
 
@@ -206,12 +208,12 @@ void P_GraphicsSub_setCarPink(int sprite_x, int sprite_y, bool hide, int palette
 		);
 }
 
-void P_GraphicsMain_setCarPink(int sprite_x, int sprite_y, bool hide){
+void P_GraphicsMain_setCarPink(int sprite_x, int sprite_y, bool hide, int palette){
 	oamSet(&oamMain, 				// oam handler
 		0,							// Number of sprite
 		sprite_x, sprite_y,			// Coordinates
 		0,							// Priority
-		2,							// Palette to use
+		palette,							// Palette to use
 		SpriteSize_16x16,			// Sprite size
 		SpriteColorFormat_16Color,	// Color format
 		gfx_pink_up,			// Loaded graphic to display
@@ -221,6 +223,7 @@ void P_GraphicsMain_setCarPink(int sprite_x, int sprite_y, bool hide){
 		false, false,	// Horizontal or vertical flip
 		false			// Mosaic
 		);
+	oamUpdate(&oamMain);
 }
 
 void P_Graphics_setCarJump(int sprite_x, bool hide){

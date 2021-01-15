@@ -50,3 +50,5 @@ void EraseJump(int x);
  * not.
  */
 int Get_TimerTicks1();
+
+int Get_TimerTicks2();

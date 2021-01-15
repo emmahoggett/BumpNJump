@@ -9,9 +9,10 @@
 #include "P_GamePlay.h"
 
 int speed = 0, x_car = 128, game_state = 0;
-int x_pink = 128, y_pink = SCREEN_HEIGHT-SPRITE_HEIGHT;
+int x_subpink = 128, y_subpink = SCREEN_HEIGHT-SPRITE_HEIGHT;
+int x_mainpink = 128, y_mainpink = 0;
 int touch = 0, enemy = 0;
-int car_pal;
+int car_pal, car_palmain;
 
 
 void Gameplay_handleInput(enum ACTION a){
@@ -30,7 +31,9 @@ void Gameplay_handleInput(enum ACTION a){
 	case RIGHT:
 		if (x_car < 180) x_car++; break;
 	case START:
-		if (game_state) game_state = 0;
+		if (game_state){
+			game_state = 0;
+		}
 		else game_state = 1;
 		Gameplay_GraphicsToggle();
 	default:
@@ -43,26 +46,29 @@ void Gameplay_Update(){
 	P_Map16x16_scrolling_BG2_Sub(speed);
 
 	Gameplay_Enemies();
-	int timer_jump = Get_TimerTicks1();
 
-	if (timer_jump == 0) {
+	if (Get_TimerTicks1() == 0 && Get_TimerTicks2() == 0 ) {
 		EraseJump(x_car);
-		carTouched(x_pink, y_pink);
-	} else {
+		carTouched(x_subpink, y_subpink);
+	} else if (Get_TimerTicks1() != 0){
 		carJump();
 	}
 
-	if(timer_jump == 0 && (scroll_pos(2)<=400 && scroll_pos(2)>=390)){
+	if(Get_TimerTicks1() == 0 && (scroll_pos(2)<=400 && scroll_pos(2)>=390)){
 		Gameplay_handleInput(START);
 	}
-	int pos_scroll_pink = (scroll_pos(2) + y_pink)%512;
+	int pos_scroll_pink = (scroll_pos(2) + y_subpink)%512;
 	if((pos_scroll_pink<=511 && pos_scroll_pink>=416)){
-		y_pink = SCREEN_HEIGHT +1;
+		y_subpink = SCREEN_HEIGHT +1;
+	}
+
+	pos_scroll_pink = (scroll_pos(3) + y_mainpink)%512;
+	if((pos_scroll_pink<=511 && pos_scroll_pink>=416)){
+		// Erase the enemies on the main
+		y_mainpink = 0;
 	}
 	updateScore(speed, touch, enemy, game_state);
 	enemy = 0; touch = 0;
-	//Update the sprites
-	P_GraphicsMain_setCarPink(100, 100, false);
 }
 
 
@@ -81,9 +87,12 @@ void Gameplay_GraphicsToggle(){
 	}
 	if (game_state){
 		readMaxScore();
+		// Disable the start background and enable the game background
 		REG_DISPCNT = ~(DISPLAY_BG1_ACTIVE) & ~(MODE_0_2D) & ~(DISPLAY_BG2_ACTIVE);
 		REG_DISPCNT = MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG3_ACTIVE;
 		displayMaxScore();
+		oamInit(&oamMain, SpriteMapping_1D_32, false);
+		y_mainpink = 0;
 	}else {
 		writeMaxScore();
 		speed = 0;
@@ -97,43 +106,63 @@ void Gameplay_GraphicsToggle(){
 }
 
 void carTouched(int x_enemy, int y_enemy){
-	if (abs(y_enemy-POS_REDCAR) < SPRITE_HEIGHT/2){
-		if (abs (x_car- x_enemy)< SPRITE_WIDTH/2){
+	if ((abs(y_enemy-POS_REDCAR) < SPRITE_HEIGHT/2) && (abs (x_car- x_enemy)< SPRITE_WIDTH/2)){
+		if (Get_TimerTicks2() == 0){
 			enemy = 50;
+			irqEnable(IRQ_TIMER2);
 			Audio_PlaySoundEX(SFX_ENEMY);
 		}
 	}
 }
 
 void carJump(){
-	if (abs(y_pink-POS_REDCAR) < SPRITE_HEIGHT){
-		if (abs (x_car- x_pink)< SPRITE_WIDTH){
-			y_pink = SCREEN_HEIGHT;
+	if (abs(y_subpink-POS_REDCAR) < SPRITE_HEIGHT){
+		if (abs (x_car- x_subpink)< SPRITE_WIDTH){
+			y_subpink = SCREEN_HEIGHT;
 			touch = 100;
 			car_pal = rand()%3 + 2;
-			P_GraphicsSub_setCarPink(x_pink, y_pink, true, car_pal);
+			P_GraphicsSub_setCarPink(x_subpink, y_subpink, true, car_pal);
 		}
 	}
 }
 
 void Gameplay_Enemies(){
 	int sgn_x= rand()%3 -1;
-	if (x_pink+sgn_x < 70 )
-		x_pink =70;
-	else if (x_pink+sgn_x > 180 )
-		x_pink =180;
-	else x_pink= x_pink+sgn_x;
+	if (x_subpink+sgn_x < 70 )
+		x_subpink =70;
+	else if (x_subpink+sgn_x > 180 )
+		x_subpink =180;
+	else x_subpink= x_subpink+sgn_x;
 
-	y_pink = y_pink - 1;
+	y_subpink = y_subpink - 1;
 
-	if ((y_pink <0 || y_pink > SCREEN_HEIGHT )||( game_state ==0)){
-		y_pink = SCREEN_HEIGHT;
-		x_pink = rand()%111 + 70;
+	if ((y_subpink <0 || y_subpink > SCREEN_HEIGHT )||( game_state ==0)){
+		y_subpink = SCREEN_HEIGHT;
+		x_subpink = rand()%111 + 70;
 		car_pal = rand()%3 + 2;
-		P_GraphicsSub_setCarPink(x_pink, y_pink, true, car_pal);
+		P_GraphicsSub_setCarPink(x_subpink, y_subpink, true, car_pal);
 	}else{
-		P_GraphicsSub_setCarPink(x_pink, y_pink, false, car_pal);
+		P_GraphicsSub_setCarPink(x_subpink, y_subpink, false, car_pal);
 	}
+	if (y_subpink <= 0) {
+		y_mainpink = SCREEN_HEIGHT;
+		x_mainpink = x_subpink;
+		car_palmain = car_pal;
+	}
+	if (y_mainpink > 0){
+		P_GraphicsMain_setCarPink(x_mainpink, y_mainpink, false, car_palmain);
+		y_mainpink -=1;
+		int sgn_x= rand()%3 -1;
+		if (x_mainpink+sgn_x < 70 )
+			x_mainpink =70;
+		else if (x_mainpink+sgn_x > 180 )
+			x_mainpink =180;
+		else x_mainpink= x_mainpink+sgn_x;
+	} else {
+		P_GraphicsMain_setCarPink(x_mainpink, y_mainpink, true, car_palmain);
+	}
+
 }
+
 
 int Get_Car_Pos(){return x_car;}

@@ -67,7 +67,7 @@ void P_Map16x16_Init();
 void P_Graphics_configureSprites();
 void P_Graphics_setCarRed(int sprite_x, bool hide);
 void P_GraphicsSub_setCarPink(int sprite_x, int sprite_y, bool hide, int palette);
-void P_GraphicsMain_setCarPink(int sprite_x, int sprite_y, bool hide);
+void P_GraphicsMain_setCarPink(int sprite_x, int sprite_y, bool hide, int palette);
 void P_Graphics_setCarJump(int sprite_x, bool hide);
 
 

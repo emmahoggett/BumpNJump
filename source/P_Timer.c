@@ -8,9 +8,12 @@
 
 #include "P_Timer.h"
 
-int i, j, timer_ticks0, timer_ticks1;
+int i, j, timer_ticks0, timer_ticks1, timer_ticks2;
 
 void timer0_IRQ(){
+	/*
+	 * Make the Warning sign blink for 1s
+	 */
 	if (timer_ticks0%2)EraseWarning();
 	else DisplayWarning();
 	timer_ticks0++;
@@ -31,7 +34,16 @@ void timer1_IRQ(){
 		irqDisable(IRQ_TIMER1);
 	}
 }
-
+void timer2_IRQ(){
+	int x_pos = Get_Car_Pos();
+	if (timer_ticks2%2)P_Graphics_setCarRed(x_pos, false);
+	else P_Graphics_setCarRed(x_pos, true);
+	timer_ticks2++;
+	if (timer_ticks2>=10){ //Blink for 1 s
+		irqDisable(IRQ_TIMER2);
+		timer_ticks2 = 0;
+	}
+}
 
 void P_Timer_Init(){
 	// Setting the interrupt for the warning sign
@@ -45,6 +57,12 @@ void P_Timer_Init(){
 	TIMER_CR(1) = TIMER_ENABLE | TIMER_DIV_1024 | TIMER_IRQ_REQ;
 	TIMER_DATA(1) = TIMER_FREQ_1024(10);  // Every 100 ms
 	irqSet(IRQ_TIMER1, &timer1_IRQ);
+
+	// Setting the interrupt for the jump animation
+	timer_ticks2 = 0;
+	TIMER_CR(2) = TIMER_ENABLE | TIMER_DIV_1024 | TIMER_IRQ_REQ;
+	TIMER_DATA(2) = TIMER_FREQ_1024(10);  // Every 100 ms
+	irqSet(IRQ_TIMER2, &timer2_IRQ);
 
 }
 
@@ -77,5 +95,6 @@ void EraseJump(int x){
 }
 
 int Get_TimerTicks1(){return timer_ticks1;}
+int Get_TimerTicks2(){return timer_ticks2;}
 
 
