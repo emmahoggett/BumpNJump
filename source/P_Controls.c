@@ -46,29 +46,25 @@ void handleTouch(){
 	//Read the touched position
 	touchRead(&touch);
 	x = touch.px; y = touch.py;
-	//The screen is touched
-	if (x || y){
+	if (x || y){ //The screen is touched
 		//Modify position of the sprite accordingly
 		if (x < Get_Car_Pos())  Gameplay_handleInput(LEFT);
-		else if (x >= Get_Car_Pos()) Gameplay_handleInput(RIGHT);
+		else if (x > Get_Car_Pos()) Gameplay_handleInput(RIGHT);
 		if (y < 96)  Gameplay_handleInput(UP);
-		else if (y >= 96) Gameplay_handleInput(DOWN);
+		else if (y > 96) Gameplay_handleInput(DOWN);
 
-		if (jump == 1) jump = 2;
-		else if (jump == 3) {
-			jump = 0;
-			Gameplay_handleInput(JUMP);
+		if (jump == 1) jump = 2; //Screen touched & jump == 1 : jump = 2
+		else if (jump == 3) { // Screen touched & jump == 3 : Make the jump action
+			jump = 0;Gameplay_handleInput(JUMP);
 		}
-		iter--;
+		iter--; // counter
 		if (iter == 0){
-			iter = 100; jump = 0;
+			iter = 50; jump = 0;
 		}
-	} else if (x == 0 && y == 0){
-		//The screen is not touched
-		if (jump == 0)jump = 1;
-		else if (jump == 2) jump = 3;
+	} else if (x == 0 && y == 0){ // The screen is not touched
+		if (jump == 0)jump = 1; // Screen not touched : jump = 1
+		else if (jump == 2) jump = 3; //Screen not touched & jump == 2 : jump = 3
 	}
-
 }
 
 

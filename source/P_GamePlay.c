@@ -25,7 +25,7 @@ void Gameplay_handleInput(enum ACTION a){
 	case DOWN:
 		if (speed > 0)speed--; break;
 	case UP:
-		if (speed < 2)speed++; break;
+		if (speed < 5)speed++; break;
 	case LEFT:
 		if (x_car >= 70) x_car-=1; break;
 	case RIGHT:
@@ -121,7 +121,7 @@ void carJump(){
 			y_subpink = SCREEN_HEIGHT;
 			touch = 100;
 			car_pal = rand()%3 + 2;
-			P_GraphicsSub_setCarPink(x_subpink, y_subpink, true, car_pal);
+			P_Graphics_setCarPink(&oamSub,x_subpink, y_subpink, true, car_pal);
 		}
 	}
 }
@@ -140,9 +140,9 @@ void Gameplay_Enemies(){
 		y_subpink = SCREEN_HEIGHT;
 		x_subpink = rand()%111 + 70;
 		car_pal = rand()%3 + 2;
-		P_GraphicsSub_setCarPink(x_subpink, y_subpink, true, car_pal);
+		P_Graphics_setCarPink(&oamSub,x_subpink, y_subpink, true, car_pal);
 	}else{
-		P_GraphicsSub_setCarPink(x_subpink, y_subpink, false, car_pal);
+		P_Graphics_setCarPink(&oamSub,x_subpink, y_subpink, false, car_pal);
 	}
 	if (y_subpink <= 0) {
 		y_mainpink = SCREEN_HEIGHT;
@@ -150,7 +150,7 @@ void Gameplay_Enemies(){
 		car_palmain = car_pal;
 	}
 	if (y_mainpink > 0){
-		P_GraphicsMain_setCarPink(x_mainpink, y_mainpink, false, car_palmain);
+		P_Graphics_setCarPink(&oamMain,x_mainpink, y_mainpink, false, car_palmain);
 		y_mainpink -=1;
 		int sgn_x= rand()%3 -1;
 		if (x_mainpink+sgn_x < 70 )
@@ -159,7 +159,7 @@ void Gameplay_Enemies(){
 			x_mainpink =180;
 		else x_mainpink= x_mainpink+sgn_x;
 	} else {
-		P_GraphicsMain_setCarPink(x_mainpink, y_mainpink, true, car_palmain);
+		P_Graphics_setCarPink(&oamMain,x_mainpink, y_mainpink, true, car_palmain);
 	}
 
 }
