@@ -33,8 +33,8 @@ void handleKeys();
  * handling the touch screen.
  * The keys are defined as following :
  * 		- Double touch : The car jumps.
- * 		- y > 96 : The car speeds up.
- * 		- y < 96 : The car slows down.
+ * 		- y < 30 : The car speeds up.
+ * 		- y > 162 : The car slows down.
  * The position of the touch is read and is compared with the current position
  * of the car :
  * 		- x_car < x : The car turns right.
