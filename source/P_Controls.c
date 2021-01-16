@@ -11,6 +11,7 @@
 
 
 int jump = 0, iter = 30;
+touchPosition touch; int x, y;
 
 
 void handleKeys(){
@@ -26,24 +27,22 @@ void handleKeys(){
 
     	//Make the car jump
     	if ((keys & KEY_A)) Gameplay_handleInput(JUMP);
-    	//Bring back to the start menu if the start
+    	//Bring back to the start menu if the start button is pressed once
     	if ((keysDown() & KEY_START))Gameplay_handleInput(START);
 }
 
 void handleTouch(){
 	/*
-	 * Condition to make the car jump - the double touch
+	 * Condition to make the car jump - the simple touch
 	 * 		- Screen not touched : jump = 1
 	 * 		- Screen touched & jump == 1 : jump = 2
 	 * 		- Screen not touched & jump == 2 : Make the jump action
-	 * There is a counter for the third condition, such that the jump is not
+	 * There is a counter for the 3rd condition, such that the jump is not
 	 * performed automatically.
 	 *
 	 */
 	// Obtain the current keypad state
 	scanKeys();
-	touchPosition touch;
-	int x, y;
 	//Read the touched position
 	touchRead(&touch);
 	x = touch.px; y = touch.py;
@@ -61,8 +60,9 @@ void handleTouch(){
 		else if (jump == 2) {
 			Gameplay_handleInput(JUMP);
 			jump = 0;
-		} // The touch screen is touched
-	} else  if ((keysHeld() & KEY_TOUCH) && (jump == 1)) jump = 2;
+		}
+	} else  if ((keysHeld() & KEY_TOUCH) && (jump == 1)) jump = 2;  // The touch screen is touched
+	// Counter - initialize jump if the scanKeys is called 30 times.
 	iter--;
 	if (iter == 0) {
 		jump = 0; iter = 30;

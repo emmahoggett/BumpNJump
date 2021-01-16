@@ -8,12 +8,13 @@
 
 #include "P_Audio.h"
 
-void Audio_Init(){
+void Audio_Init()
+{
 	//Init the sound library
 	mmInitDefaultMem((mm_addr)soundbank_bin);
 	//Load module
 	mmLoad(MOD_RETROGAMES_INGAME3);
-	//Load effects
+	//Load effects - Jump and enemy effects
 	mmLoadEffect(SFX_JUMP);
 	mmLoadEffect(SFX_ENEMY);
 

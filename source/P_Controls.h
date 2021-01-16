@@ -39,6 +39,7 @@ void handleKeys();
  * of the car :
  * 		- x_car < x : The car turns right.
  * 		- x_car > x : The  car turns left.
+ * To jump, the player must do a simple touch.
  */
 void handleTouch();
 

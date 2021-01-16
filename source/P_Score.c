@@ -26,8 +26,7 @@ void updateScore(int speed, int touch, int enemy, int _game_state)
 	 *	If the enemy is touched without jumping, the enemy score is removed
 	 *	If the enemy is touched while jumping, the touch score is added
 	 */
-	switch(speed)
-	{
+	switch(speed){
 	case 1: score+=1; break;
 	case 2: score+=2; break;
 	case 3: score+=3; break;
@@ -41,8 +40,7 @@ void updateScore(int speed, int touch, int enemy, int _game_state)
 	displayScore(_game_state);
 
 	//Update highest score
-	if(score > max_score)
-	{
+	if(score > max_score){
 		max_score = score;
 		displayMaxScore();
 	}
@@ -51,7 +49,7 @@ void updateScore(int speed, int touch, int enemy, int _game_state)
 
 /*
  * This function displays the score counter on the left of the
- * screen using the palette 9 (white color preloaded)
+ * screen using the TILE_PALETTE 9 (white color preloaded)
  *
  * The map (10) is modified accordingly to the points stored in the
  * variable store
@@ -62,8 +60,7 @@ void displayScore(int _game_state)
 
 	int j,i, number;
 	//i, digit to display
-	for(i = 5; i>0; i--)
-	{
+	for(i = 5; i>0; i--){
 		//calculate the power of i-1 in j
 		j = i-1; number = 1;
 		while(j--)number = number*10;
@@ -80,8 +77,8 @@ void displayScore(int _game_state)
 }
 /*
  * This function displays the highest score obtained in previous games
- * on the center part of the screen at the start menu. It uses the palette 8
- * (with orange color preloaded)
+ * on the center part of the screen at the start menu. It uses the TILE_PALETTE
+ * 8 (with orange color preloaded)
  */
 void displayMaxScore_Start(int _game_state)
 {
@@ -140,8 +137,8 @@ void writeMaxScore()
 
 /*
  * This function displays the highest score obtained in previous games
- * on the left part of top the screen. It uses the palette 8 (with orange color
- * preloaded)
+ * on the left part of top the screen. It uses the TILE_PALETTE 8 (with orange
+ * color preloaded)
  */
 void displayMaxScore()
 {
