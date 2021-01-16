@@ -11,6 +11,10 @@
 int i, j, timer_ticks0, timer_ticks1, timer_ticks2;
 
 void timer0_IRQ(){
+	/*
+	 * The warning tile blinks for 1[s] with the Timer0. After 1 [s], the timer is enabled,
+	 * the counter timer_ticks0 is initialized to zero, and the warning tile is hiden.
+	 */
 	if (timer_ticks0%2)EraseWarning(); // Remove the warning sign
 	else DisplayWarning(); // Display the warning sign
 	timer_ticks0++;
@@ -24,7 +28,10 @@ void timer0_IRQ(){
 
 }
 void timer1_IRQ(){
-	// Display the jump animation
+	/*
+	 * The car jump for 1[s] with the Timer1. After 1 [s], the timer is enabled,
+	 * the counter timer_ticks1 is initialized to zero, and the jump sprite is hiden.
+	 */
 	DisplayJump(Get_Car_Pos());
 	timer_ticks1++;
 	if (timer_ticks1>=10){
@@ -36,10 +43,14 @@ void timer1_IRQ(){
 	}
 }
 void timer2_IRQ(){
-	if (timer_ticks2%2)P_Graphics_setCarRed(Get_Car_Pos(), false);
-	else P_Graphics_setCarRed(Get_Car_Pos(), true);
+	/*
+	 * The car blinks for 1[s] with the Timer2. After 1 [s], the timer is enabled,
+	 * and the counter timer_ticks2 is initialized to zero.
+	 */
+	if (timer_ticks2%2)P_Graphics_setCarRed(Get_Car_Pos(), false); // Show the red car
+	else P_Graphics_setCarRed(Get_Car_Pos(), true); // Hide the red car
 	timer_ticks2++;
-	if (timer_ticks2>=10){ //Blink for 1 [s]
+	if (timer_ticks2>=10){
 		irqDisable(IRQ_TIMER2);
 		timer_ticks2 = 0;
 	}
@@ -84,7 +95,7 @@ void DisplayWarning(){
 void EraseWarning(){
 	/*
 	 * Fill the main engine with the transparent tile where the warning sign is
-	 * shown.
+	 * shown. This has effect to erase the warning sign.
 	 */
 	for (i = 0; i <2; i++){
 		BG_MAP_RAM(9)[(i+21)*32 + 16] = 0;

@@ -11,7 +11,6 @@
 
 
 void P_InitNDS(){
-
 	//Initialize the main, sub and sprite engines
 	P_Graphics_setup_main();
 

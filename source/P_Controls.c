@@ -10,10 +10,11 @@
 #include "P_GamePlay.h"
 
 
-int jump = 0, iter = 100;
+int jump = 0, iter = 50;
 
 
 void handleKeys(){
+		// Obtain the current keypad state - Obtain the current keypad held state.
 		scanKeys();
 		unsigned keys = keysHeld();
 
@@ -40,6 +41,7 @@ void handleTouch(){
 	 * performed automatically.
 	 *
 	 */
+	// Obtain the current keypad state
 	scanKeys();
 	touchPosition touch;
 	int x, y;

@@ -13,7 +13,7 @@
 
 
 /*
- * \brief Initialize the engines, backgrounds, timers and audio
+ * \brief Initialize the engines, backgrounds, timers and audio.
  */
 void P_InitNDS();
 
