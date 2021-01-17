@@ -31,11 +31,11 @@ void Gameplay_handleInput(enum ACTION a){
 		if (speed < 2)speed++;break;
 	case LEFT:
 		if (x_car >= left_bound) x_car-=1;
-		else x_car++;
+		else Gameplay_handleInput(START);
 		break;
 	case RIGHT:
 		if (x_car < right_bound) x_car++;
-		else x_car-=1;
+		else Gameplay_handleInput(START);
 		break;
 	case START:
 		if (game_state){
@@ -51,6 +51,15 @@ void Gameplay_handleInput(enum ACTION a){
 void Gameplay_Update(){
 	// Update the road background on the main and the sub engine
 	P_Map16x16_scrolling(speed);
+
+	int pos_car = (scroll_pos(2) + POS_REDCAR)%512;
+	int pos_enemy_sub = (scroll_pos(2) + y_subpink)%512;
+	int pos_enemy_main = (scroll_pos(3) + y_mainpink)%512;
+
+	Gameplay_RoadBoundaries(pos_car, &left_bound, &right_bound);
+	Gameplay_RoadBoundaries(pos_enemy_sub, &left_bound_ensub, &right_bound_ensub);
+	Gameplay_RoadBoundaries(pos_enemy_main, &left_bound_enmain, &right_bound_enmain);
+
 	Gameplay_Enemies();
 
 	if (Get_TimerTicks1() == 0 && Get_TimerTicks2() == 0 ) {
@@ -83,13 +92,6 @@ void P_Game(){
 		Gameplay_Update();
 	handleKeys();
 	handleTouch();
-	int pos_car = (scroll_pos(2) + POS_REDCAR)%512;
-	int pos_enemy_sub = (scroll_pos(2) + y_subpink)%512;
-	int pos_enemy_main = (scroll_pos(3) + y_mainpink)%512;
-
-	Gameplay_RoadBoundaries(pos_car, &left_bound, &right_bound);
-	Gameplay_RoadBoundaries(pos_enemy_sub, &left_bound_ensub, &right_bound_ensub);
-	Gameplay_RoadBoundaries(pos_enemy_main, &left_bound_enmain, &right_bound_enmain);
 }
 
 void Gameplay_GraphicsToggle(){
@@ -99,9 +101,12 @@ void Gameplay_GraphicsToggle(){
 		BG_MAP_RAM(10)[i] = 0;
 	}
 	if (game_state){
+		// Read the max score from previous
 		readMaxScore();
-		// Disable the start background and enable the game background
+
+		// Disable the main engine in mode 0 (2D) and activate Backgrounds 2 and 1.
 		REG_DISPCNT = ~(DISPLAY_BG1_ACTIVE) & ~(MODE_0_2D) & ~(DISPLAY_BG2_ACTIVE);
+		// Disable the main engine in mode 0 (2D) and activate Backgrounds 0, 1 and 3.
 		REG_DISPCNT = MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG3_ACTIVE;
 		displayMaxScore();
 		oamInit(&oamMain, SpriteMapping_1D_32, false);
@@ -182,7 +187,7 @@ void Gameplay_RoadBoundaries(int pos, int* left, int* right){
 	if (pos >255 && pos < 304){
 		*left = 67;
 		*right = 187;
-	} else if (pos >176 && pos < 223-SPRITE_HEIGHT){
+	} else if (pos >176 && pos < 207){
 		*left = 67;
 		*right = 219;
 	} else {

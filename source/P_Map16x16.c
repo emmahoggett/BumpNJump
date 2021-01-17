@@ -235,7 +235,7 @@ void P_Graphics_setCarPink(OamState* oam, int sprite_x, int sprite_y, bool hide,
 void P_Graphics_setCarJump(int sprite_x, bool hide){
 	oamSet(&oamSub, 				// oam handler
 		1,							// Number of sprite
-		sprite_x-8, POS_REDCAR,				// Coordinates
+		sprite_x-8, POS_REDCAR,		// Coordinates
 		0,							// Priority
 		1,							// Palette to use
 		SpriteSize_32x32,			// Sprite size
