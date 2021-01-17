@@ -8,7 +8,41 @@
 
 #include "P_Map16x16.h"
 
-int i, bg3_main = 1,bg2_sub = 193, bg2_sub_pos = 193;
+int i, bg3_main = 1,bg2_sub = 193;
+
+
+void P_Map16x16_Init(){
+	// Configure the main engine backgrounds
+	P_Map16x16_configureBG3();
+	P_Map16x16_configureBG2();
+	P_Map16x16_configureStart();
+	P_Map16x16_configureBG0();
+
+	// Configure the sub engine backgrounds
+	P_Map16x16_configureBG2_Sub();
+
+	// Configure the sub engine sprites
+	P_Graphics_configureSprites();
+}
+
+
+void P_Map16x16_configureStart(){
+	//Initialize Background
+	BGCTRL[2] = BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(12) | BG_TILE_BASE(4);
+
+	// Transfer of the image and the palette to the engine
+	dmaCopy(startscreenmainTiles,BG_TILE_RAM(4),startscreenmainTilesLen);
+	dmaCopy(startscreenmainPal,&BG_PALETTE[0xD0],startscreenmainPalLen);
+	dmaCopy(startscreenmainMap,BG_MAP_RAM(12),startscreenmainMapLen);
+
+	// Fill the main screen with startscreenmainMap and the appropriate palette
+	for (i = 0; i<32*32;i++){
+		BG_MAP_RAM(12)[i] = startscreenmainMap[(i)] | TILE_PALETTE(13);
+	}
+	//Display the max score
+	displayMaxScore_Start(0);
+
+}
 
 void P_Map16x16_configureBG0(){
 	//Initialize Background
@@ -23,25 +57,6 @@ void P_Map16x16_configureBG0(){
 	while(i--)
 		BG_MAP_RAM(9)[i] = 0;
 
-}
-
-void P_Map16x16_configureBG3(){
-	//Initialize Background
-	BGCTRL[3] =  BG_32x64 | BG_COLOR_16 | BG_MAP_BASE(7) | BG_TILE_BASE(0);
-
-	// Transfer of the image and the palette to the engine
-	dmaCopy(roadTiles,BG_TILE_RAM(0), roadTilesLen);
-	dmaCopy(roadPal,&BG_PALETTE[0], roadPalLen);
-
-	for (i = 0; i <32; i++){
-		dmaCopy(&roadMap[i*32], &BG_MAP_RAM(7)[i*32],64);
-	}
-
-	for (i = 0; i <32; i++){
-		dmaCopy(&roadMap[(i+32)*32], &BG_MAP_RAM(8)[i*32],64);
-	}
-	// Set the  position of the image on the screen
-	REG_BG3VOFS = bg3_main;
 }
 
 void P_Map16x16_configureBG2(){
@@ -63,11 +78,60 @@ void P_Map16x16_configureBG2(){
 		BG_MAP_RAM(10)[i] = 0;
 }
 
+void P_Map16x16_configureBG3(){
+	//Initialize Background
+	BGCTRL[3] =  BG_32x64 | BG_COLOR_16 | BG_MAP_BASE(7) | BG_TILE_BASE(0);
 
-void P_Map16x16_scrolling_BG3(int _speed){
-	// Make the scrolling
+	// Transfer of the image and the palette to the engine
+	dmaCopy(roadTiles,BG_TILE_RAM(0), roadTilesLen);
+	dmaCopy(roadPal,&BG_PALETTE[0], roadPalLen);
+
+	for (i = 0; i <32; i++){
+		dmaCopy(&roadMap[i*32], &BG_MAP_RAM(7)[i*32],64);
+	}
+
+	for (i = 0; i <32; i++){
+		dmaCopy(&roadMap[(i+32)*32], &BG_MAP_RAM(8)[i*32],64);
+	}
+	// Set the  position of the image on the screen
+	REG_BG3VOFS = bg3_main;
+}
+
+
+void P_Map16x16_configureBG2_Sub(){
+	//Initialize Background
+	BGCTRL_SUB[2] =  BG_32x64 | BG_COLOR_16 | BG_MAP_BASE(0) | BG_TILE_BASE(1);
+
+	// Transfer of the image and the palette to the engine
+	dmaCopy(roadTiles,BG_TILE_RAM_SUB(1), roadTilesLen);
+	dmaCopy(roadPal,BG_PALETTE_SUB, roadPalLen);
+
+	for (i = 0; i <32; i++){
+		dmaCopy(&roadMap[i*32], &BG_MAP_RAM_SUB(0)[i*32],64);
+	}
+
+	for (i = 0; i <32; i++){
+		dmaCopy(&roadMap[(i+32)*32], &BG_MAP_RAM_SUB(1)[i*32],64);
+	}
+	// Set the  position of the image on the screen
+	REG_BG2VOFS_SUB = bg2_sub;
+}
+
+
+void P_Map16x16_scrolling_Init(){
+	// Initialize the scrolling positions
+	bg3_main = 1; bg2_sub = 193;
+}
+
+
+void P_Map16x16_scrolling(int _speed){
+	// Update the position of the road in the main engine 3rd background
 	REG_BG3VOFS = bg3_main;
 	bg3_main =( bg3_main - _speed)%512;
+
+	// Update the position of the road in the main engine 2nd background
+	REG_BG2VOFS_SUB = bg2_sub;
+	bg2_sub = bg2_sub- _speed;
 
 	// Triggers the warning sign
 	if (bg3_main>=-_speed-1 && bg3_main<=0)irqEnable(IRQ_TIMER0);
@@ -89,63 +153,7 @@ int scroll_pos(int bg_num){
 	return bg_bis;
 }
 
-void P_Map16x16_scrolling_Init(){
-	// Initialize the scrolling positions
-	bg3_main = 1; bg2_sub = 193; bg2_sub_pos = 193;
-}
 
-void P_Map16x16_configureStart(){
-	//Initialize Background
-	BGCTRL[2] = BG_32x32 | BG_COLOR_16 | BG_MAP_BASE(12) | BG_TILE_BASE(4);
-	dmaCopy(startscreenmainTiles,BG_TILE_RAM(4),startscreenmainTilesLen);
-	dmaCopy(startscreenmainPal,&BG_PALETTE[0xD0],startscreenmainPalLen);
-	dmaCopy(startscreenmainMap,BG_MAP_RAM(12),startscreenmainMapLen);
-
-	for (i = 0; i<32*32;i++){
-		//Render the number
-		BG_MAP_RAM(12)[i] = startscreenmainMap[(i)] | TILE_PALETTE(13);
-	}
-	displayMaxScore_Start(0);
-
-}
-
-void P_Map16x16_configureBG2_Sub(){
-	//Initialize Background
-	BGCTRL_SUB[2] =  BG_32x64 | BG_COLOR_16 | BG_MAP_BASE(0) | BG_TILE_BASE(1);
-
-	// Transfer of the image and the palette to the engine
-	dmaCopy(roadTiles,BG_TILE_RAM_SUB(1), roadTilesLen);
-	dmaCopy(roadPal,BG_PALETTE_SUB, roadPalLen);
-
-	for (i = 0; i <32; i++){
-		dmaCopy(&roadMap[i*32], &BG_MAP_RAM_SUB(0)[i*32],64);
-	}
-
-	for (i = 0; i <32; i++){
-		dmaCopy(&roadMap[(i+32)*32], &BG_MAP_RAM_SUB(1)[i*32],64);
-	}
-
-	REG_BG2VOFS_SUB = bg2_sub;
-}
-
-void P_Map16x16_scrolling_BG2_Sub(int _speed){
-	REG_BG2VOFS_SUB = bg2_sub;
-	bg2_sub = bg2_sub- _speed;
-}
-
-void P_Map16x16_Init(){
-	// Configure the main engine backgrounds
-	P_Map16x16_configureBG3();
-	P_Map16x16_configureBG2();
-	P_Map16x16_configureStart();
-	P_Map16x16_configureBG0();
-
-	// Configure the sub engine backgrounds
-	P_Map16x16_configureBG2_Sub();
-
-	// Configure the sub engine sprites
-	P_Graphics_configureSprites();
-}
 
 void P_Graphics_configureSprites(){
 	//Allocate space for the graphic to show in the sprites (enemies, red car, jump animation)
@@ -158,6 +166,7 @@ void P_Graphics_configureSprites(){
 	//Copy data for the graphic (palette)
 	dmaCopy(carredPal, SPRITE_PALETTE_SUB, carredPalLen);
 	dmaCopy(carjumpPal, &SPRITE_PALETTE_SUB[16], carjumpPalLen);
+
 	//Fill the 2nd, 3rd and 4th palette of the main engine sprite palette
 	dmaCopy(carpinkPal, &SPRITE_PALETTE_SUB[32], carpinkPalLen);
 	SPRITE_PALETTE_SUB[51] = ARGB16(1,0,31,31);
@@ -195,12 +204,12 @@ void P_Graphics_setCarRed(int sprite_x, bool hide){
 		0,							// Palette to use
 		SpriteSize_16x16,			// Sprite size
 		SpriteColorFormat_16Color,	// Color format
-		gfx_red,			// Loaded graphic to display
-		-1,				// Affine rotation to use (-1 none)
-		false,			// Double size if rotating
-		hide,			// Hide this sprite
-		false, false,	// Horizontal or vertical flip
-		false			// Mosaic
+		gfx_red,					// Loaded graphic to display
+		-1,							// Affine rotation to use (-1 none)
+		false,						// Double size if rotating
+		hide,						// Hide this sprite
+		false, false,				// Horizontal or vertical flip
+		false						// Mosaic
 		);
 }
 

@@ -42,8 +42,7 @@ void Gameplay_handleInput(enum ACTION a){
 }
 
 void Gameplay_Update(){
-	P_Map16x16_scrolling_BG3(speed);
-	P_Map16x16_scrolling_BG2_Sub(speed);
+	P_Map16x16_scrolling(speed);
 
 	Gameplay_Enemies();
 

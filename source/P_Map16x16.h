@@ -25,6 +25,12 @@ u16* gfx_jump;
 u16* gfx_pink_up;
 u16* gfx_pink_down;
 
+
+/*
+ * \brief Initialize engines' background and sprites.
+ */
+void P_Map16x16_Init();
+
 /*
  * \brief Configure the main background 1
  * The "startscreen.png" is stored and appears when the start button is pushed
@@ -32,7 +38,7 @@ u16* gfx_pink_down;
  *
  * The following configuration is performed:
  * 		- 32x32 tile map
- * 		- 16 color palette
+ * 		- 16 color palette - BG_PALETTE 13
  * 		- BG_MAP 12 - BG_TILE 4
  */
 void P_Map16x16_configureStart();
@@ -45,7 +51,7 @@ void P_Map16x16_configureStart();
  *
  * The following configuration is performed:
  * 		- 32x32 tile map
- * 		- 16 color palette - - BG_PALETTE 10
+ * 		- 16 color palette - BG_PALETTE 10
  * 		- BG_MAP 9 - BG_TILE 2
  */
 void P_Map16x16_configureBG0();
@@ -74,14 +80,35 @@ void P_Map16x16_configureBG2();
  * The following configuration is performed:
  * 		- 32x64 tile map
  * 		- 16 color palette - BG_PALETTE 0
- * 		- BG_MAP 7 - BG_TILE 0
+ * 		- BG_MAP 7 & 8 - BG_TILE 0
  *
  * As the map of the road is larger then the previous images, a second memory
  * slot is used, BG_MAP 8.
  */
 void P_Map16x16_configureBG3();
 
+/*
+ * \brief Configure the sub engine's background 2
+ * The "road.png" is stored and correspond to the road background.
+ *
+ * The following configuration is performed:
+ * 		- 32x64 tile map
+ * 		- 16 color palette - BG_PALETTE_SUB 0
+ * 		- BG_MAP_SUB 0 & 1 - BG_TILE_SUB 1
+ *
+ * As the map of the road is larger then the previous images, a second memory
+ * slot is used, BG_MAP_SUB 1.
+ */
 void P_Map16x16_configureBG2_Sub();
+
+
+/*
+ * \brief Initialize the road's background scroll position.
+ *
+ * The road's position for the sub engine is the pixel 193 and for the main engine,
+ * the pixel 1.
+ */
+void P_Map16x16_scrolling_Init();
 
 /*
  * \brief Make the scrolling accordingly to the speed of the car on the main
@@ -90,21 +117,87 @@ void P_Map16x16_configureBG2_Sub();
  * The car speed is controlled by players. If the position is close to the jump,
  * the Timer0 is triggered and it triggers the warning sign blinking.
  */
-void P_Map16x16_scrolling_BG3(int _speed);
-void P_Map16x16_scrolling_BG2_Sub(int _speed);
-void P_Map16x16_scrolling_Init();
+void P_Map16x16_scrolling(int _speed);
+
 
 /*
- * \brief The position of the road is returned
+ * \brief Return the position of the road's scrolling
+ *
+ * @param bg_num : Choose which background scrolling is returned. For the sub
+ * engine, bg_num = 2 and the main engine, bg_num = 3.
+ *
+ * @return A positive integer that is between 0 and 512. The value correspond to
+ * the position in the road picture.
+ *
  */
 int scroll_pos(int bg_num);
 
 
-void P_Map16x16_Init();
-
+/*
+ * \brief Configure the car, jump and enemies sprites
+ *
+ * This function takes into account the memory allocation, the palette
+ * configuration
+ *
+ * The following configuration is performed:
+ *  a. For the red car
+ * 		- 16x16 sprite size
+ * 		- 16 color palette - SPRITE_PALETTE_SUB 0
+ * 		- Pointer to the graphic buffer : gfx_red
+ * 		- Sub engine
+ *
+ *  b. For the jump animation
+ * 		- 32x32 sprite size
+ * 		- 16 color palette - SPRITE_PALETTE_SUB 1
+ * 		- Pointer to the graphic buffer : gfx_jump
+ * 		- Sub engine
+ *
+ *  c. For the enemies in the sub engine
+ * 		- 16x16 sprite size
+ * 		- 16 color palette - SPRITE_PALETTE_SUB 2, 3 & 4
+ * 		- Pointer to the graphic buffer : gfx_pink_down
+ * 		- Sub engine
+ *
+ *  d. For the enemies in the main engine
+ * 		- 16x16 sprite size
+ * 		- 16 color palette - SPRITE_PALETTE 2, 3 & 4
+ * 		- Pointer to the graphic buffer : gfx_pink_up
+ * 		- Main engine
+ */
 void P_Graphics_configureSprites();
+
+/*
+ * \brief Set the red car position along x and if the sprites needs to be hiden.
+ *
+ * @param sprite_x	:	Integer that correspond to the position along x of the car
+ * 					 	on the screen.
+ * @param hide		: 	Boolean, if true the car is hiden otherwise the car is shown.
+ */
 void P_Graphics_setCarRed(int sprite_x, bool hide);
+/*
+ * \brief Set the enemies position (x & y), color (2,3 & 4), OamState (oamSub & oamMain),
+ * and finally if the sprite is hiden or not.
+ *
+ * @param oam		:	OamState pointer that correspond tto which engine is used
+ * 						(oamSub or oamMain)
+ * @param sprite_x	:	Integer that correspond to the position along x of the enemy
+ * 					 	on the screen.
+ * @param sprite_y	:	Integer that correspond to the position along y of the enemy
+ * 					 	on the screen.
+ * @param hide		: 	Boolean, if true the enemy is hiden otherwise the enemy is shown.
+ * @param palette	: 	Integer that correspond to the palette (2,3 & 4) used.
+ * 						The palette definition is the same for the main and sub
+ * 						engine for practical reasons.
+ */
 void P_Graphics_setCarPink(OamState* oam, int sprite_x, int sprite_y, bool hide, int palette);
+
+/*
+ * \brief Set the jump position along x and if the sprite needs to be hiden.
+ *
+ * @param sprite_x	:	Integer that correspond to the position along x of the jump
+ * 					 	on the screen.
+ * @param hide		: 	Boolean, if true the jump is hiden otherwise the jump is shown.
+ */
 void P_Graphics_setCarJump(int sprite_x, bool hide);
 
 
