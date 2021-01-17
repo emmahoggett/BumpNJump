@@ -110,7 +110,7 @@ void Gameplay_GraphicsToggle(){
 		REG_DISPCNT = MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG3_ACTIVE;
 		displayMaxScore();
 		oamInit(&oamMain, SpriteMapping_1D_32, false);
-		y_mainpink = 0;
+		y_mainpink = 0; x_car = 128;y_subpink = SCREEN_HEIGHT +1;
 	}else {
 		writeMaxScore();
 		speed = 0;
