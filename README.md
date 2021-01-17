@@ -37,7 +37,7 @@ This virtual machine runs on an open source virtualization software called Virtu
 
 
 ## Authors
-Hoggett Emma
+Hoggett Emma,
 Durand Mathilde
 
 ## Project Status
