@@ -11,7 +11,7 @@
 
 
 int jump = 0, iter = 30;
-touchPosition touch; int x, y;
+int x, y;
 
 
 void handleKeys(){
@@ -44,6 +44,7 @@ void handleTouch(){
 	// Obtain the current keypad state
 	scanKeys();
 	//Read the touched position
+	touchPosition touch;
 	touchRead(&touch);
 	x = touch.px; y = touch.py;
 	if (keysHeld() & KEY_TOUCH){ //The screen is touched

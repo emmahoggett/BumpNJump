@@ -17,6 +17,8 @@ void P_Map16x16_configureBG0(){
 	// Transfer of the image and the palette to the engine
 	dmaCopy(warningTiles,(u8*)BG_TILE_RAM(2),warningTilesLen);
 	dmaCopy(warningPal,&BG_PALETTE[160],warningPalLen);
+
+	// Fill the map with transparent tile
 	int i = 32*32;
 	while(i--)
 		BG_MAP_RAM(9)[i] = 0;
@@ -38,6 +40,7 @@ void P_Map16x16_configureBG3(){
 	for (i = 0; i <32; i++){
 		dmaCopy(&roadMap[(i+32)*32], &BG_MAP_RAM(8)[i*32],64);
 	}
+	// Set the  position of the image on the screen
 	REG_BG3VOFS = bg3_main;
 }
 
@@ -48,13 +51,13 @@ void P_Map16x16_configureBG2(){
 	// Store the numbers tiles
 	dmaCopy(numbersTiles,(u8*)BG_TILE_RAM(3),numbersTilesLen);
 
-	// Store the 16 color palette for numbers in the 8th and 9th background
-	// palette
+	// Store the 16 color palette for numbers in the 8th and 9th background palette
 	dmaCopy(numbersPal,&BG_PALETTE[128],numbersPalLen);
 	dmaCopy(numbersPal,&BG_PALETTE[144],numbersPalLen);
 	BG_PALETTE[129] = ARGB16(1,31,15,0); // Store orange color for the max score
 	BG_PALETTE[145] = ARGB16(1,31,31,31); // Store white color for the player score
 
+	// Fill the map with transparent tile
 	int i = 32*32;
 	while(i--)
 		BG_MAP_RAM(10)[i] = 0;
@@ -62,18 +65,24 @@ void P_Map16x16_configureBG2(){
 
 
 void P_Map16x16_scrolling_BG3(int _speed){
+	// Make the scrolling
 	REG_BG3VOFS = bg3_main;
 	bg3_main =( bg3_main - _speed)%512;
+
+	// Triggers the warning sign
 	if (bg3_main>=-_speed-1 && bg3_main<=0)irqEnable(IRQ_TIMER0);
 }
 
 int scroll_pos(int bg_num){
 	int bg_bis;
+	// Choose which background is returned.
 	if (bg_num ==2){
 		bg_bis = bg2_sub;
-	}else{
+	}else if (bg_num ==3){
 		bg_bis = bg3_main;
 	}
+	// To return a value that is between 512 and 0 - the variables bg2_sub and
+	// bg3_main are negative values
 	while (bg_bis <0){
 		bg_bis +=512;
 	}
