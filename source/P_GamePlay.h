@@ -26,7 +26,7 @@ void Gameplay_Update();
 void Gameplay_GraphicsToggle();
 void P_Game();
 void Gameplay_Enemies();
-void Gameplay_RoadBoundaries();
+void Gameplay_RoadBoundaries(int pos, int* left, int* right);
 void carTouched(int x_enemy, int y_enemy);
 void carJump();
 int Get_Car_Pos();

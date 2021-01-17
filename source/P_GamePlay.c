@@ -14,6 +14,8 @@ int x_mainpink = 128, y_mainpink = 0;
 int touch = 0, enemy = 0;
 int car_pal, car_palmain;
 int left_bound = 81, right_bound = 207;
+int left_bound_enmain = 81, right_bound_enmain = 207;
+int left_bound_ensub = 81, right_bound_ensub = 207;
 
 
 void Gameplay_handleInput(enum ACTION a){
@@ -26,11 +28,15 @@ void Gameplay_handleInput(enum ACTION a){
 	case DOWN:
 		if (speed > 0)speed--; break;
 	case UP:
-		if (speed < 5)speed++; break;
+		if (speed < 2)speed++;break;
 	case LEFT:
-		if (x_car >= left_bound) x_car-=1; break;
+		if (x_car >= left_bound) x_car-=1;
+		else x_car++;
+		break;
 	case RIGHT:
-		if (x_car < right_bound - SPRITE_WIDTH) x_car++; break;
+		if (x_car < right_bound) x_car++;
+		else x_car-=1;
+		break;
 	case START:
 		if (game_state){
 			game_state = 0;
@@ -45,7 +51,6 @@ void Gameplay_handleInput(enum ACTION a){
 void Gameplay_Update(){
 	// Update the road background on the main and the sub engine
 	P_Map16x16_scrolling(speed);
-	Gameplay_RoadBoundaries();
 	Gameplay_Enemies();
 
 	if (Get_TimerTicks1() == 0 && Get_TimerTicks2() == 0 ) {
@@ -78,6 +83,13 @@ void P_Game(){
 		Gameplay_Update();
 	handleKeys();
 	handleTouch();
+	int pos_car = (scroll_pos(2) + POS_REDCAR)%512;
+	int pos_enemy_sub = (scroll_pos(2) + y_subpink)%512;
+	int pos_enemy_main = (scroll_pos(3) + y_mainpink)%512;
+
+	Gameplay_RoadBoundaries(pos_car, &left_bound, &right_bound);
+	Gameplay_RoadBoundaries(pos_enemy_sub, &left_bound_ensub, &right_bound_ensub);
+	Gameplay_RoadBoundaries(pos_enemy_main, &left_bound_enmain, &right_bound_enmain);
 }
 
 void Gameplay_GraphicsToggle(){
@@ -131,17 +143,17 @@ void carJump(){
 
 void Gameplay_Enemies(){
 	int sgn_x= rand()%3 -1;
-	if (x_subpink+sgn_x < 70 )
-		x_subpink =70;
-	else if (x_subpink+sgn_x > 180 )
-		x_subpink =180;
+	if (x_subpink+sgn_x < left_bound_ensub)
+		x_subpink++;
+	else if (x_subpink+sgn_x > right_bound_ensub )
+		x_subpink -=1;
 	else x_subpink= x_subpink+sgn_x;
 
 	y_subpink = y_subpink - 1;
 
 	if ((y_subpink <0 || y_subpink > SCREEN_HEIGHT )||( game_state ==0)){
 		y_subpink = SCREEN_HEIGHT;
-		x_subpink = rand()%111 + 70;
+		x_subpink = rand()%(right_bound_ensub-left_bound_ensub) + left_bound_ensub;
 		car_pal = rand()%3 + 2;
 		P_Graphics_setCarPink(&oamSub,x_subpink, y_subpink, true, car_pal);
 	}else{
@@ -156,28 +168,28 @@ void Gameplay_Enemies(){
 		P_Graphics_setCarPink(&oamMain,x_mainpink, y_mainpink, false, car_palmain);
 		y_mainpink -=1;
 		int sgn_x= rand()%3 -1;
-		if (x_mainpink+sgn_x < 70 )
-			x_mainpink =70;
-		else if (x_mainpink+sgn_x > 180 )
-			x_mainpink =180;
+		if (x_mainpink+sgn_x < left_bound_enmain )
+			x_mainpink ++;
+		else if (x_mainpink+sgn_x > right_bound_enmain )
+			x_mainpink-=1;
 		else x_mainpink= x_mainpink+sgn_x;
 	} else {
 		P_Graphics_setCarPink(&oamMain,x_mainpink, y_mainpink, true, car_palmain);
 	}
 
 }
-void Gameplay_RoadBoundaries(){
-	int pos_car = (scroll_pos(2) + POS_REDCAR)%512;
-	if (pos_car >264 && pos_car < 296-SPRITE_HEIGHT){
-		left_bound = 67;
-		right_bound = 187;
-	} else if (pos_car >184 && pos_car < 215-SPRITE_HEIGHT){
-		left_bound = 67;
-		right_bound = 219;
+void Gameplay_RoadBoundaries(int pos, int* left, int* right){
+	if (pos >255 && pos < 304){
+		*left = 67;
+		*right = 187;
+	} else if (pos >176 && pos < 223-SPRITE_HEIGHT){
+		*left = 67;
+		*right = 219;
 	} else {
-		left_bound = 81;
-		right_bound = 207;
+		*left = 81;
+		*right = 207;
 	}
+	*right = *right - SPRITE_WIDTH;
 }
 
 int Get_Car_Pos(){return x_car;}
