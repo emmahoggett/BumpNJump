@@ -19,6 +19,7 @@ int main(void) {
 	P_InitNDS();
 
 	while(1){
+		//
 		P_Game();
 
 		// Update the sprites in the main and sub engine
