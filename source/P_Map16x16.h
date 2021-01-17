@@ -19,7 +19,7 @@
 #include "carpink.h"
 #include "startscreenmain.h"
 
-//Pointer to the graphic buffer where to store the sprites
+//Pointer to the graphic buffer where to store the sprites.
 u16* gfx_red;
 u16* gfx_jump;
 u16* gfx_pink_up;
@@ -28,6 +28,8 @@ u16* gfx_pink_down;
 
 /*
  * \brief Initialize engines' background and sprites.
+ *
+ * This function does not receive any input parameter.
  */
 void P_Map16x16_Init();
 
@@ -40,6 +42,7 @@ void P_Map16x16_Init();
  * 		- 32x32 tile map
  * 		- 16 color palette - BG_PALETTE 13
  * 		- BG_MAP 12 - BG_TILE 4
+ * This function does not receive any input parameter.
  */
 void P_Map16x16_configureStart();
 
@@ -53,6 +56,8 @@ void P_Map16x16_configureStart();
  * 		- 32x32 tile map
  * 		- 16 color palette - BG_PALETTE 10
  * 		- BG_MAP 9 - BG_TILE 2
+ *
+ * This function does not receive any input parameter.
  */
 void P_Map16x16_configureBG0();
 
@@ -70,6 +75,7 @@ void P_Map16x16_configureBG0();
  *
  * Two color palettes are used, one for the highest score that is orange and one
  * for the players score that is white.
+ * This function does not receive any input parameter.
  */
 void P_Map16x16_configureBG2();
 
@@ -84,6 +90,7 @@ void P_Map16x16_configureBG2();
  *
  * As the map of the road is larger then the previous images, a second memory
  * slot is used, BG_MAP 8.
+ * This function does not receive any input parameter.
  */
 void P_Map16x16_configureBG3();
 
@@ -98,6 +105,7 @@ void P_Map16x16_configureBG3();
  *
  * As the map of the road is larger then the previous images, a second memory
  * slot is used, BG_MAP_SUB 1.
+ * This function does not receive any input parameter.
  */
 void P_Map16x16_configureBG2_Sub();
 
@@ -107,6 +115,7 @@ void P_Map16x16_configureBG2_Sub();
  *
  * The road's position for the sub engine is the pixel 193 and for the main engine,
  * the pixel 1.
+ * This function does not receive any input parameter.
  */
 void P_Map16x16_scrolling_Init();
 
@@ -163,6 +172,8 @@ int scroll_pos(int bg_num);
  * 		- 16 color palette - SPRITE_PALETTE 2, 3 & 4
  * 		- Pointer to the graphic buffer : gfx_pink_up
  * 		- Main engine
+ *
+ * This function does not receive any input parameter.
  */
 void P_Graphics_configureSprites();
 

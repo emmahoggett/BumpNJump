@@ -14,6 +14,8 @@
 
 /*
  * \brief Initialize the engines, backgrounds, timers and audio.
+ *
+ * This function does not receive any input parameter.
  */
 void P_InitNDS();
 

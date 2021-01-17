@@ -1,4 +1,3 @@
-#pragma once
 /*
  * BumpNJumpDefines.h
  *
@@ -8,6 +7,8 @@
  *
  * Define major variables.
  */
+
+#pragma once
 
 #define SCREEN_WIDTH	256
 #define	SCREEN_HEIGHT	192

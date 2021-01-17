@@ -24,6 +24,8 @@
  * 	- KEY A : 		The car jumps when the A key is held.
  * 	- KEY_START : 	Bring back to the start menu and reset the score to zero
  *
+ * This function does not receive any input parameter.
+ *
  */
 void handleKeys();
 
@@ -40,6 +42,8 @@ void handleKeys();
  * 		- x_car < x : The car turns right.
  * 		- x_car > x : The  car turns left.
  * To jump, the player must do a simple touch.
+ *
+ * This function does not receive any input parameter.
  */
 void handleTouch();
 
