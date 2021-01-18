@@ -1,1 +1,0 @@
-carred.o: carred.s

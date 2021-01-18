@@ -1,1 +1,0 @@
-startscreenmain.o: startscreenmain.s

@@ -1,1 +1,0 @@
-carpink.o: carpink.s
