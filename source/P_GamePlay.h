@@ -18,12 +18,7 @@
 #include "P_Timer.h"
 #include "P_Controls.h"
 
-/*
- * \brief Initialize Gameplay (game state, score).
- * ELLE NEST PAS DANS LE .c ?
- * This function does not receive any input parameter.
- */
-void Gameplay_Init();
+
 
 /*
  * \brief Handle the action enabled by pressing the corresponding keys
