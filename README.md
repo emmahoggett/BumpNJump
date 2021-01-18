@@ -22,7 +22,7 @@ This virtual machine runs on an open source virtualization software called Virtu
 * _LEFT_: go left.
 * _UP_ : speed up the car.
 * _DOWN_ : slow down the car.
-* _A_ or _Double Touch_ : jump.
+* _A_ or _Simple Touch_ : jump.
 * _START_ : Bring back to start menu.
 
 ## Code
