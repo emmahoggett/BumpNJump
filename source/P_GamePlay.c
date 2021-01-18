@@ -174,6 +174,7 @@ void Gameplay_Enemies(){
 		 */
 	//Position of the sprite enemy on the sub screen
 	//x randomly generated
+
 	int sgn_x= rand()%3 -1;
 	//x adapted to the road width
 	if (x_subpink+sgn_x < left_bound_ensub)

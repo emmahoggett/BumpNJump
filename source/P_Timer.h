@@ -29,12 +29,16 @@ void P_Timer_Init();
 /*
  *\brief Function that display the warning sign.
  *
- *This function does not receive any input parameter.
+ * Fill the main engine with the warning tile. The TILE_PALETTE(10)
+ * correspond to the palette of the warning tile.
+ * The warning tile is shown at the bottom center of the main engine.
+ * This function does not receive any input parameter.
  */
 void DisplayWarning();
 /*
  *\brief Function that remove the warning sign.
- *
+ * Fill the main engine with the transparent tile where the warning sign is
+ * shown. This has effect to erase the warning sign.
  * This function does not receive any input parameter.
  */
 void EraseWarning();
@@ -67,6 +71,6 @@ int Get_TimerTicks1();
  * This timer is linked with the car's blinking when it is touched by an enemy.
  * This function is used for the P_Gameplay to know if the car is touched by an
  * enemy
- *  @return A positive integer that correspond to the 2nd timer counter.
+ * @return A positive integer that correspond to the 2nd timer counter.
  */
 int Get_TimerTicks2();

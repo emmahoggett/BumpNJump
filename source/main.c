@@ -19,7 +19,7 @@ int main(void) {
 	P_InitNDS();
 
 	while(1){
-		//
+		// Handle keys, touch and update the game.
 		P_Game();
 
 		// Update the sprites in the main and sub engine

@@ -39,21 +39,13 @@ void updateScore(int speed, int touch, int enemy, int _game_state)
 	//Display the score
 	displayScore(_game_state);
 
-	//Update highest score
+	//Update & display highest score
 	if(score > max_score){
 		max_score = score;
 		displayMaxScore();
 	}
 }
 
-
-/*
- * This function displays the score counter on the left of the
- * screen using the TILE_PALETTE 9 (white color preloaded)
- *
- * The map (10) is modified accordingly to the points stored in the
- * variable store
- */
 
 void displayScore(int _game_state)
 {
@@ -69,19 +61,19 @@ void displayScore(int _game_state)
 		number = number % 10;
 		//Render the number
 		if (_game_state){
+			// Display the max score on the top left corner during the game.
 			BG_MAP_RAM(10)[32 +6-i] = numbersMap[(number)] | TILE_PALETTE(9);
 		}else {
+			// Transparent tile for start menu.
 			BG_MAP_RAM(10)[32 +6-i] = 0;
 		}
 	}
 }
-/*
- * This function displays the highest score obtained in previous games
- * on the center part of the screen at the start menu. It uses the TILE_PALETTE
- * 8 (with orange color preloaded)
- */
+
+
 void displayMaxScore_Start(int _game_state)
 {
+	// Read the max score from the file /BumpNJumprecord.txt.
 	readMaxScore();
 	int i, j, number;
 	for(i = 5; i>0; i--)
@@ -91,19 +83,16 @@ void displayMaxScore_Start(int _game_state)
 		number = max_score / number;
 		number = number % 10;
 		if (_game_state){
+			// If the game starts the center of the image is filled with transparent tile
 			BG_MAP_RAM(10)[(16)*32 +21-i] = 0;
 		} else {
+			// Show on the start menu the max score at the center
 			BG_MAP_RAM(10)[(16)*32 +21-i] = numbersMap[(number)] | TILE_PALETTE(8);
 		}
 	}
 }
 
 
-/*
- * This function reads the highest score obtained in previous games and
- * stored in a text file called /BumpNJumprecord.txt. The read value is assigned
- * to the variable max_score
- */
 void readMaxScore()
 {
 	//Open the file in read mode
@@ -117,10 +106,7 @@ void readMaxScore()
 	}
 }
 
-/*
- * This function writes the value of the variable max_score
- * into the text file /BumpNJumprecord
- */
+
 void writeMaxScore()
 {
 	//Open the file in write mode to overwrite
@@ -135,11 +121,7 @@ void writeMaxScore()
 	score = 0;
 }
 
-/*
- * This function displays the highest score obtained in previous games
- * on the left part of top the screen. It uses the TILE_PALETTE 8 (with orange
- * color preloaded)
- */
+
 void displayMaxScore()
 {
 
@@ -150,6 +132,7 @@ void displayMaxScore()
 		while(j--)number = number*10;
 		number = max_score / number;
 		number = number % 10;
+		// Display the max score during the game.
 		BG_MAP_RAM(10)[3*32 +6-i] = numbersMap[(number)] | TILE_PALETTE(8);
 	}
 }
