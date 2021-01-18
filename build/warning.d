@@ -1,0 +1,1 @@
+warning.o: warning.s

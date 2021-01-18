@@ -18,12 +18,12 @@ The Eclipse software environment was used to write and compile this program for 
 This virtual machine runs on an open source virtualization software called VirtualBox. The software is available in different platforms and it can be freely run on most of the popular operating systems (OSs).
 
 ## Command
-* _RIGHT_ : go right.
-* _LEFT_: go left.
+* _RIGHT_ : turn right.
+* _LEFT_: turn left.
 * _UP_ : speed up the car.
 * _DOWN_ : slow down the car.
 * _A_ or _Simple Touch_ : jump.
-* _START_ : Bring back to start menu.
+* _START_ : bring back to start menu or start the game.
 
 ## Code
 * ``` P_Gameplay ``` : Handle the gameplay.
@@ -37,8 +37,9 @@ This virtual machine runs on an open source virtualization software called Virtu
 
 
 ## Authors
-Hoggett Emma,
-Durand Mathilde
+* Durand Mathilde : mathilde.durand@epfl.ch
+* Hoggett Emma : emma.hoggett@epfl.ch
+
 
 ## Project Status
 The project was submitted on the 18 January 2021, as part of the Microprogrammed embedded systems course.
