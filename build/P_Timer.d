@@ -1,5 +1,5 @@
-P_Timer.o: /home/nds/files/Lab3/workspace/BumpNJump/source/P_Timer.c \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_Timer.h \
+P_Timer.o: /home/nds/files/workspace/BumpNJump_EE310/source/P_Timer.c \
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_Timer.h \
   /opt/devkitPro/libnds/include/nds.h \
   /opt/devkitPro/libnds/include/nds/libversion.h \
   /opt/devkitPro/libnds/include/nds/ndstypes.h \
@@ -48,27 +48,27 @@ P_Timer.o: /home/nds/files/Lab3/workspace/BumpNJump/source/P_Timer.c \
   /opt/devkitPro/libnds/include/nds/arm9/sprite.h \
   /opt/devkitPro/libnds/include/nds/system.h \
   /opt/devkitPro/libnds/include/nds/arm9/decompress.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_Map16x16.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/BumpNJumpDefines.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_Score.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_Graphics.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/startscreenmain.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/road.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/numbers.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/warning.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/carred.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/carjump.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/carpink.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_GamePlay.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_Audio.h \
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_Map16x16.h \
+  /home/nds/files/workspace/BumpNJump_EE310/source/BumpNJumpDefines.h \
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_Score.h \
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_Graphics.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/startscreenmain.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/road.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/numbers.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/warning.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/carred.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/carjump.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/carpink.h \
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_GamePlay.h \
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_Audio.h \
   /opt/devkitPro/libnds/include/maxmod9.h \
   /opt/devkitPro/libnds/include/mm_types.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/soundbank.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/soundbank_bin.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/soundbank.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/soundbank_bin.h \
   /opt/devkitPro/libnds/include/nds/arm9/sound.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_Controls.h
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_Controls.h
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_Timer.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_Timer.h:
 
 /opt/devkitPro/libnds/include/nds.h:
 
@@ -166,40 +166,40 @@ P_Timer.o: /home/nds/files/Lab3/workspace/BumpNJump/source/P_Timer.c \
 
 /opt/devkitPro/libnds/include/nds/arm9/decompress.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_Map16x16.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_Map16x16.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/BumpNJumpDefines.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/BumpNJumpDefines.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_Score.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_Score.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_Graphics.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_Graphics.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/startscreenmain.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/startscreenmain.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/road.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/road.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/numbers.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/numbers.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/warning.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/warning.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/carred.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/carred.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/carjump.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/carjump.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/carpink.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/carpink.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_GamePlay.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_GamePlay.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_Audio.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_Audio.h:
 
 /opt/devkitPro/libnds/include/maxmod9.h:
 
 /opt/devkitPro/libnds/include/mm_types.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/soundbank.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/soundbank.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/soundbank_bin.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/soundbank_bin.h:
 
 /opt/devkitPro/libnds/include/nds/arm9/sound.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_Controls.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_Controls.h:

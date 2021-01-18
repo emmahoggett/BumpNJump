@@ -1,6 +1,6 @@
 P_Graphics.o:  \
- /home/nds/files/Lab3/workspace/BumpNJump/source/P_Graphics.c \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_Graphics.h \
+ /home/nds/files/workspace/BumpNJump_EE310/source/P_Graphics.c \
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_Graphics.h \
   /opt/devkitPro/libnds/include/nds.h \
   /opt/devkitPro/libnds/include/nds/libversion.h \
   /opt/devkitPro/libnds/include/nds/ndstypes.h \
@@ -49,9 +49,9 @@ P_Graphics.o:  \
   /opt/devkitPro/libnds/include/nds/arm9/sprite.h \
   /opt/devkitPro/libnds/include/nds/system.h \
   /opt/devkitPro/libnds/include/nds/arm9/decompress.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/startscreenmain.h
+  /home/nds/files/workspace/BumpNJump_EE310/build/startscreenmain.h
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_Graphics.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_Graphics.h:
 
 /opt/devkitPro/libnds/include/nds.h:
 
@@ -149,4 +149,4 @@ P_Graphics.o:  \
 
 /opt/devkitPro/libnds/include/nds/arm9/decompress.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/startscreenmain.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/startscreenmain.h:

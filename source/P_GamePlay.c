@@ -258,10 +258,10 @@ void Gameplay_Enemies(){
 }
 void Gameplay_RoadBoundaries(int pos, int* left, int* right){
 	/*
-		 * Different road width conditions
-		 * Sprite width taken into account for the right side
-		 *
-		 */
+	 * Different road width conditions
+	 * Sprite width taken into account for the right side
+	 *
+	 */
 	if (pos >255 && pos < 304){
 		*left = 67;
 		*right = 187;

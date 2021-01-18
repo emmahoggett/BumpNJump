@@ -1,5 +1,5 @@
-P_Audio.o: /home/nds/files/Lab3/workspace/BumpNJump/source/P_Audio.c \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_Audio.h \
+P_Audio.o: /home/nds/files/workspace/BumpNJump_EE310/source/P_Audio.c \
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_Audio.h \
   /opt/devkitPro/libnds/include/nds.h \
   /opt/devkitPro/libnds/include/nds/libversion.h \
   /opt/devkitPro/libnds/include/nds/ndstypes.h \
@@ -50,10 +50,10 @@ P_Audio.o: /home/nds/files/Lab3/workspace/BumpNJump/source/P_Audio.c \
   /opt/devkitPro/libnds/include/nds/arm9/decompress.h \
   /opt/devkitPro/libnds/include/maxmod9.h \
   /opt/devkitPro/libnds/include/mm_types.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/soundbank.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/soundbank_bin.h
+  /home/nds/files/workspace/BumpNJump_EE310/build/soundbank.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/soundbank_bin.h
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_Audio.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_Audio.h:
 
 /opt/devkitPro/libnds/include/nds.h:
 
@@ -155,6 +155,6 @@ P_Audio.o: /home/nds/files/Lab3/workspace/BumpNJump/source/P_Audio.c \
 
 /opt/devkitPro/libnds/include/mm_types.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/soundbank.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/soundbank.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/soundbank_bin.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/soundbank_bin.h:

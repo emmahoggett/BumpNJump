@@ -1,5 +1,5 @@
-P_Score.o: /home/nds/files/Lab3/workspace/BumpNJump/source/P_Score.c \
-  /home/nds/files/Lab3/workspace/BumpNJump/source/P_Score.h \
+P_Score.o: /home/nds/files/workspace/BumpNJump_EE310/source/P_Score.c \
+  /home/nds/files/workspace/BumpNJump_EE310/source/P_Score.h \
   /opt/devkitPro/libnds/include/nds.h \
   /opt/devkitPro/libnds/include/nds/libversion.h \
   /opt/devkitPro/libnds/include/nds/ndstypes.h \
@@ -48,11 +48,11 @@ P_Score.o: /home/nds/files/Lab3/workspace/BumpNJump/source/P_Score.c \
   /opt/devkitPro/libnds/include/nds/arm9/sprite.h \
   /opt/devkitPro/libnds/include/nds/system.h \
   /opt/devkitPro/libnds/include/nds/arm9/decompress.h \
-  /home/nds/files/Lab3/workspace/BumpNJump/build/numbers.h \
+  /home/nds/files/workspace/BumpNJump_EE310/build/numbers.h \
   /opt/devkitPro/libnds/include/fat.h \
   /opt/devkitPro/libnds/include/nds/disc_io.h
 
-/home/nds/files/Lab3/workspace/BumpNJump/source/P_Score.h:
+/home/nds/files/workspace/BumpNJump_EE310/source/P_Score.h:
 
 /opt/devkitPro/libnds/include/nds.h:
 
@@ -150,7 +150,7 @@ P_Score.o: /home/nds/files/Lab3/workspace/BumpNJump/source/P_Score.c \
 
 /opt/devkitPro/libnds/include/nds/arm9/decompress.h:
 
-/home/nds/files/Lab3/workspace/BumpNJump/build/numbers.h:
+/home/nds/files/workspace/BumpNJump_EE310/build/numbers.h:
 
 /opt/devkitPro/libnds/include/fat.h:
 
