@@ -110,7 +110,7 @@ void Gameplay_GraphicsToggle(){
 		REG_DISPCNT = MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG3_ACTIVE;
 		displayMaxScore();
 		oamInit(&oamMain, SpriteMapping_1D_32, false);
-		y_mainpink = 0; x_car = 128;y_subpink = SCREEN_HEIGHT +1;
+		y_mainpink = 0;
 	}else {
 		writeMaxScore();
 		speed = 0;
@@ -124,6 +124,11 @@ void Gameplay_GraphicsToggle(){
 }
 
 void carTouched(int x_enemy, int y_enemy){
+	/*
+	* Launch the enemy car blinking animation.
+	* The enemy is considered touch if the difference between its position along x and y with the player car position is closer than half of the sprite dimensions
+	* Enemy is updated
+	*/
 	if ((abs(y_enemy-POS_REDCAR) < SPRITE_HEIGHT/2) && (abs (x_car- x_enemy)< SPRITE_WIDTH/2)){
 		if (Get_TimerTicks2() == 0){
 			enemy = 50;
@@ -136,6 +141,12 @@ void carTouched(int x_enemy, int y_enemy){
 
 
 void carJump(){
+	/*
+	* When the position of the car and the sprite enemy along y and along x are both closer than respectively the sprite's height and width
+	* The enemy sprite is destroyed and therefore hidden
+	* touch is updated
+	* a new color is generated for the enemy sprite
+	*/
 	if (abs(y_subpink-POS_REDCAR) < SPRITE_HEIGHT){
 		if (abs (x_car- x_subpink)< SPRITE_WIDTH){
 			y_subpink = SCREEN_HEIGHT;
@@ -147,6 +158,12 @@ void carJump(){
 }
 
 void Gameplay_Enemies(){
+	/*
+		 * Position along x of the enemy defined randomly and adjust with the boundary of the subscreen map
+		 * When the enemy sprite arrive at the top of the sub screen it is hidden and the main screen is updated with the given sprite.
+		 * It will also be hidden when it will reach the top of the main screen and a new enemy sprite will be generated on the sub screen.
+		 */
+
 	int sgn_x= rand()%3 -1;
 	if (x_subpink+sgn_x < left_bound_ensub)
 		x_subpink++;
@@ -157,8 +174,10 @@ void Gameplay_Enemies(){
 	y_subpink = y_subpink - 1;
 
 	if ((y_subpink <0 || y_subpink > SCREEN_HEIGHT )||( game_state ==0)){
+		//position for next sprite enemy (bottom screen after a start)
 		y_subpink = SCREEN_HEIGHT;
 		x_subpink = rand()%(right_bound_ensub-left_bound_ensub) + left_bound_ensub;
+		//palette for next sprite enemy
 		car_pal = rand()%3 + 2;
 		P_Graphics_setCarPink(&oamSub,x_subpink, y_subpink, true, car_pal);
 	}else{
@@ -184,6 +203,11 @@ void Gameplay_Enemies(){
 
 }
 void Gameplay_RoadBoundaries(int pos, int* left, int* right){
+	/*
+		 * Different road width conditions
+		 * Sprite width taken into account for the right side
+		 *
+		 */
 	if (pos >255 && pos < 304){
 		*left = 67;
 		*right = 187;
