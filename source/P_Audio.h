@@ -20,6 +20,8 @@
  *	 	MOD_RETROGAMES_INGAME3 : Game music
  *	 	SFX_JUMP : Jump effect
  *	 	SFX_ENEMY : Enemy effect
+ *
+ * This function does not receive any input parameter.
  */
 void Audio_Init();
 
@@ -32,6 +34,8 @@ void Audio_PlaySoundEX(int i);
 
 /*
  * \brief Play the music in the sound library, in loop.
+ *
+ * This function does not receive any input parameter.
  */
 void Audio_PlayMusic();
 

@@ -79,12 +79,8 @@ void P_Timer_Init(){
 
 
 void DisplayWarning(){
-	/*
-	 *  Fill the main engine with the warning tile. The TILE_PALETTE(10)
-	 *  correspond to the palette of the warning tile.
-	 *  The warning tile is shown at the bottom center of the main engine.
-	 */
 	j= 0;
+	// Copy the map and the corresponding palette
 	for (i = 0; i <2; i++){
 		BG_MAP_RAM(9)[(i+21)*32 + 16] = warningMap[j] | TILE_PALETTE(10);
 		j++;
@@ -93,10 +89,7 @@ void DisplayWarning(){
 	}
 }
 void EraseWarning(){
-	/*
-	 * Fill the main engine with the transparent tile where the warning sign is
-	 * shown. This has effect to erase the warning sign.
-	 */
+	// Fill with the transparent tile
 	for (i = 0; i <2; i++){
 		BG_MAP_RAM(9)[(i+21)*32 + 16] = 0;
 		BG_MAP_RAM(9)[(i+21)*32 + 17] = 0;

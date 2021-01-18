@@ -46,7 +46,8 @@ void handleTouch(){
 	//Read the touched position
 	touchRead(&touch);
 	x = touch.px; y = touch.py;
-	if (keysHeld() & KEY_TOUCH){ //The screen is touched
+	if (keysHeld() & KEY_TOUCH){
+		//The screen is touched
 		//Modify position of the sprite accordingly
 		if (x < Get_Car_Pos())  Gameplay_handleInput(LEFT);
 		else if (x > Get_Car_Pos()) Gameplay_handleInput(RIGHT);
@@ -58,10 +59,11 @@ void handleTouch(){
 		// The touch screen is untouched
 		if (jump == 0) jump = 1;
 		else if (jump == 2) {
+			// Make the jump
 			Gameplay_handleInput(JUMP);
 			jump = 0;
 		}
-	} else  if ((keysHeld() & KEY_TOUCH) && (jump == 1)) jump = 2;  // The touch screen is touched
+	} else  if ((keysHeld() & KEY_TOUCH) && (jump == 1)) jump = 2; // The touch screen is touched
 	// Counter - initialize jump if the scanKeys is called 30 times.
 	iter--;
 	if (iter == 0) {

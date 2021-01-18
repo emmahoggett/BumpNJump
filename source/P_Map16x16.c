@@ -86,10 +86,11 @@ void P_Map16x16_configureBG3(){
 	dmaCopy(roadTiles,BG_TILE_RAM(0), roadTilesLen);
 	dmaCopy(roadPal,&BG_PALETTE[0], roadPalLen);
 
+	// TOP half of the image in the BG_MAP 7
 	for (i = 0; i <32; i++){
 		dmaCopy(&roadMap[i*32], &BG_MAP_RAM(7)[i*32],64);
 	}
-
+	// BOTTOM half of the image in the BG_MAP 8
 	for (i = 0; i <32; i++){
 		dmaCopy(&roadMap[(i+32)*32], &BG_MAP_RAM(8)[i*32],64);
 	}
@@ -106,10 +107,12 @@ void P_Map16x16_configureBG2_Sub(){
 	dmaCopy(roadTiles,BG_TILE_RAM_SUB(1), roadTilesLen);
 	dmaCopy(roadPal,BG_PALETTE_SUB, roadPalLen);
 
+	// TOP half of the image in the BG_MAP_SUB 0
 	for (i = 0; i <32; i++){
 		dmaCopy(&roadMap[i*32], &BG_MAP_RAM_SUB(0)[i*32],64);
 	}
 
+	// BOTTOM half of the image in the BG_MAP_SUB 1
 	for (i = 0; i <32; i++){
 		dmaCopy(&roadMap[(i+32)*32], &BG_MAP_RAM_SUB(1)[i*32],64);
 	}

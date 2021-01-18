@@ -159,10 +159,10 @@ void carJump(){
 
 void Gameplay_Enemies(){
 	/*
-		 * Position along x of the enemy defined randomly and adjust with the boundary of the subscreen map
-		 * When the enemy sprite arrive at the top of the sub screen it is hidden and the main screen is updated with the given sprite.
-		 * It will also be hidden when it will reach the top of the main screen and a new enemy sprite will be generated on the sub screen.
-		 */
+	 * Position along x of the enemy defined randomly and adjust with the boundary of the subscreen map
+	 * When the enemy sprite arrive at the top of the sub screen it is hidden and the main screen is updated with the given sprite.
+	 * It will also be hidden when it will reach the top of the main screen and a new enemy sprite will be generated on the sub screen.
+	 */
 
 	int sgn_x= rand()%3 -1;
 	if (x_subpink+sgn_x < left_bound_ensub)

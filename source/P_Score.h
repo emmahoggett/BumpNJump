@@ -49,14 +49,18 @@ void displayMaxScore_Start(int _game_state);
  * \brief Read the max score from a secondary storage
  * This function reads the highest score obtained in previous games and
  * stored in a text file called /BumpNJumprecord.txt. The read value is assigned
- * to the variable max_score
+ * to the variable max_score.
+ *
+ * This function does not receive any input parameter.
  */
 void readMaxScore();
 
 /*
  * \brief Write the max score in a secondary storage
  * This function writes the value of the variable max_score
- * into the text file /BumpNJumprecord
+ * into the text file /BumpNJumprecord.txt.
+ *
+ * This function does not receive any input parameter.
  */
 void writeMaxScore();
 /*
@@ -64,6 +68,8 @@ void writeMaxScore();
  *
  * This function displays the highest score obtained in previous games
  * on the left part of top the screen. It uses the TILE_PALETTE 8 (with orange
- * color preloaded)
+ * color preloaded).
+ *
+ * This function does not receive any input parameter.
  */
 void displayMaxScore();

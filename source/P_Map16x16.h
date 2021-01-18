@@ -185,6 +185,7 @@ void P_Graphics_configureSprites();
  * @param hide		: 	Boolean, if true the car is hiden otherwise the car is shown.
  */
 void P_Graphics_setCarRed(int sprite_x, bool hide);
+
 /*
  * \brief Set the enemies position (x & y), color (2,3 & 4), OamState (oamSub & oamMain),
  * and finally if the sprite is hiden or not.
