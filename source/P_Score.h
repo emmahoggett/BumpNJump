@@ -12,6 +12,9 @@
 
 void updateScore();
 void displayScore();
+/*
+ * \brief
+ */
 void displayMaxScore_Start(int _game_state);
 void readMaxScore();
 void writeMaxScore();
